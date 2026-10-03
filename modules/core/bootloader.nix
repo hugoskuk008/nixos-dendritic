@@ -3,7 +3,6 @@
 {
   flake.modules.nixos.bootloader = { lib, ... }: {
     boot.loader = {
-      systemd-boot.enable = lib.mkForce false;
 
       efi = {
         canTouchEfiVariables = true;
@@ -11,7 +10,7 @@
       };
 
       grub = {
-        enable = lib.mkForce true;
+        enable = true;
         efiSupport = true;
         device = "nodev";
         configurationLimit = 20;

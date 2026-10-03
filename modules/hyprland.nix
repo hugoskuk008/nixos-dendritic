@@ -15,21 +15,9 @@
   };
 
 
-  flake.modules.homeManager.hyprland-slaghoken = {...}:{
+  flake.modules.homeManager.hyprland = {configname, ...}:{
 
-      xdg.configFile."hypr/hyprland.lua".source = ../hosts/laptop/hyprland/hyprland.lua;
+      xdg.configFile."hypr/".source = ../config/${configname}/hyprland;
 
   };
-
-
-  flake.modules.homeManager.hyprland-laptroll = {...}: {
-      
-      xdg.configFile."hypr/hyprland.lua".source = ../hosts/laptop/hyprland/hyprland.lua;
-  
-  };
-
-
-
-
-
 }
