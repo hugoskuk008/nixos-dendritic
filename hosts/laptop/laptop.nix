@@ -3,8 +3,8 @@
   flake.nixosConfigurations.laptop = inputs.nixpkgs.lib.nixosSystem {
     
     modules = [
-      ../../../hosts/laptop/hardware-configuration.nix
-      ../../../hosts/laptop/specialisation.nix
+      ./hardware-configuration.nix
+      ./specialisation.nix
       inputs.home-manager.nixosModules.home-manager
       config.flake.modules.nixos.bootloader
       config.flake.modules.nixos.locale
