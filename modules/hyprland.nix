@@ -19,7 +19,7 @@
 
 
   flake.modules.homeManager.hyprland = {configname, ...}:{
-
+      programs.zsh.enable = true;
       xdg.configFile."hypr".source = ../config/${configname}/hyprland;
       xdg.configFile."kitty".source = ../config/kitty;  
         xdg.configFile."waybar".source = ../config/${configname}/waybar;
