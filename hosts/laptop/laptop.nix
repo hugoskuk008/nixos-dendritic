@@ -14,7 +14,9 @@ in {
       nvim
       steam
       dgpuService
-  #   hyprland
+      office
+      rdp
+#   hyprland
 #     niri
   ])
   ++[
