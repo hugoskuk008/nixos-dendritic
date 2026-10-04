@@ -47,6 +47,7 @@ in {
       config.flake.modules.homeManager.gnome
        config.flake.modules.homeManager.hyprland
 #      config.flake.modules.homeManager.niri
+      config.flake.modules.homeManager.zsh
       ];
       home.stateVersion = "26.05";
           };

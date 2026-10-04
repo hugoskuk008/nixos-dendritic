@@ -5,7 +5,7 @@ flake.modules.homeManager.zsh = {config, ...}:{
 programs.zsh = {
   enable = true;
   enableCompletion = true;
-  autosuggestions.enable = true;
+  autosuggestion.enable = true;
   syntaxHighlighting.enable = true;
 
   shellAliases = {
@@ -20,14 +20,12 @@ programs.zsh = {
 
   # Add raw commands that would normally go into .zshrc
   initExtra = ''
-    # Custom shell hooks or exports
-    eval "$(zoxide init zsh)"
   '';
 };
 
-programs.zsh.ohMyZsh = {
+programs.zsh.oh-my-zsh = {
   enable = true;
-  theme = "agnoster";
+  theme = "robbyrussell";
   plugins = [ "git" "sudo" "docker" ];
 };
 
