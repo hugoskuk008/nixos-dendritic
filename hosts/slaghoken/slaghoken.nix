@@ -2,7 +2,7 @@
 let
   args = {configname = "slaghoken"; user = "admin";};
 in {
-  flake.nixosConfigurations.laptop = inputs.nixpkgs.lib.nixosSystem {
+  flake.nixosConfigurations.slaghoken = inputs.nixpkgs.lib.nixosSystem {
    specialArgs = args; 
     modules = (with config.flake.modules.nixos;
 [
@@ -10,13 +10,13 @@ in {
       bootloader
       system
       locale
-      gnome
+#      gnome
       nvim
       steam
       dgpuService
       office
       rdp
-#   hyprland
+   hyprland
 #     niri
   ])
   ++[
