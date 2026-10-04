@@ -3,7 +3,10 @@
   flake.modules.nixos.hyprland = {pkgs, ...}: {
     programs.hyprland.enable = true;
     services.displayManager.ly.enable = true;
-      environment.systemPackages = with pkgs; [
+    services.blueman.enable = true;
+    hardware.bluetooth.enable = true;
+    hardware.bluetooth.powerOnBoot = true;
+    environment.systemPackages = with pkgs; [
      
 
       kitty
@@ -17,7 +20,8 @@
 
   flake.modules.homeManager.hyprland = {configname, ...}:{
 
-      xdg.configFile."hypr/".source = ../config/${configname}/hyprland;
-      xdg.configFile."waybar".source = ../config${configname}/waybar;
+      xdg.configFile."hypr".source = ../config/${configname}/hyprland;
+      xdg.configFile."kitty".source = ../config/kitty;  
+        xdg.configFile."waybar".source = ../config/${configname}/waybar;
   };
 }

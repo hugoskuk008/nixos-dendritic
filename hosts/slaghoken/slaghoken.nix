@@ -13,7 +13,6 @@ in {
 #      gnome
       nvim
       steam
-      dgpuService
       office
       rdp
    hyprland
@@ -46,7 +45,7 @@ in {
       imports = [
       config.flake.modules.homeManager.nvim
       config.flake.modules.homeManager.gnome
- #     config.flake.modules.homeManager.hyprland
+       config.flake.modules.homeManager.hyprland
 #      config.flake.modules.homeManager.niri
       ];
       home.stateVersion = "26.05";
