@@ -10,12 +10,12 @@ in {
       bootloader
       system
       locale
-#      gnome
+      gnome
       nvim
       steam
       office
       rdp
-   hyprland
+#   hyprland
 #     niri
   ])
   ++[
