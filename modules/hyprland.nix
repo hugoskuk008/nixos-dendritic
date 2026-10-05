@@ -24,6 +24,8 @@
       waybar
       btop
       pavucontrol 
+      mesa-demos
+      vulkan-tools
     ];
   };
 
@@ -38,7 +40,8 @@
       ../config/${configname}/waybar;
     xdg.configFile."rofi".source = 
       ../config/rofi;
-
+    xdg.configFile."waypaper".source = 
+    ../config/waypaper;
     home.pointerCursor = {
       enable = true;
       gtk.enable = true;
@@ -51,6 +54,8 @@
     home.packages = with pkgs; [
       nerd-fonts.jetbrains-mono
       vesktop
+      awww
+      waypaper
     ];
 
     fonts.fontconfig.enable = true;
