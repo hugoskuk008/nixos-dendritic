@@ -10,6 +10,7 @@ in {
       bootloader
       system
       locale
+      security
 #      gnome
       nvim
       steam

@@ -9,7 +9,9 @@
     };
   };
 
-  outputs = inputs:
+  outputs = inputs @{ self, ...}: let
+secrets = builtins.fromJSON (builtins.readFile "${self}/secrets/secrets.json");
+in 
     inputs.flake-parts.lib.mkFlake { inherit inputs; } {
       systems = [ "x86_64-linux" ];
 
@@ -22,3 +24,4 @@
       ];
     };
 }   
+
