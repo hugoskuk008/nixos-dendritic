@@ -3,6 +3,8 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-parts.url = "github:hercules-ci/flake-parts";
     import-tree.url = "github:vic/import-tree";
+    sls-steam.url = "github:AceSLS/SLSsteam";
+    acella.url = "github:ciscosweater/enter-the-wired";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";

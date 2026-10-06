@@ -34,7 +34,7 @@ flake.modules.nixos.security = {pkgs, ...}: {
     allowedTCPPorts = [
        22
        80
-
+       443
 
       ];
     allowedUDPPorts = [

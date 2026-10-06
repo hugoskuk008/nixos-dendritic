@@ -17,32 +17,18 @@ in {
       office
       rdp
    hyprland
+   firefox
 #     niri
   ])
   ++[
     ./hardware-configuration.nix
-    
+    ./common.nix
 
   
 {
-         
-      home-manager.extraSpecialArgs = args;
-        programs.firefox.enable=true;
-        nixpkgs.hostPlatform = "x86_64-linux";  
-             networking.hostName = "Slaghoken"; # Define your hostname.
-             networking.networkmanager.enable = true;
-             hardware.enableRedistributableFirmware = true;
   
-          services.xserver.videoDrivers = ["amdgpu"];
-          services.sshd.enable = true;
-      #   services.asusd.enable = true;
-        
-        users.users.${args.user} = {
-          isNormalUser = true;
-          extraGroups = [ "wheel" ];
-          };
-          
-    home-manager.users.${args.user} = {
+   home-manager.extraSpecialArgs = args;
+   home-manager.users.${args.user} = {
       imports = [
       config.flake.modules.homeManager.nvim
       config.flake.modules.homeManager.gnome
@@ -52,6 +38,11 @@ in {
       ];
       home.stateVersion = "26.05";
           };
+
+
+
+          
+ 
         
         }
       ];

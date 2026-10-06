@@ -7,14 +7,14 @@ nix.settings.experimental-features = ["nix-command" "flakes"];
 environment.systemPackages = with pkgs; [
 vim
 git
+btop
 wget
-alacritty
-discord
 ]; 
 system.stateVersion = "26.05";
+hardware.enableRedistributableFirmware = true;
 nixpkgs.config.allowUnfree = true;
-  # rtkit (optional, recommended) allows Pipewire to use the realtime scheduler for increased performance.
   security.rtkit.enable = true;
+  
   services.pipewire = {
     enable = true; # if not already enabled
     alsa.enable = true;
