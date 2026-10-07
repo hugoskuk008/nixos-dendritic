@@ -6,12 +6,12 @@
       systemd.services.ryzenadj = {
         description = "Apply RyzenAdj power limits";
         wantedBy = [ "multi-user.target" "post-resume.target" ];
-        after = [ "post-resume.target" "tlp.service" ];
-        path = [ pkgs.tlp pkgs.ryzenadj ];
+        after = [ "post-resume.target" ];
+        path = [ pkgs.ryzenadj ];
         serviceConfig.Type = "oneshot";
         script = ''
-          tlp-run-on bat ryzenadj --stapm-limit=8000 --fast-limit=10000 --slow-limit=8000
-          tlp-run-on ac ryzenadj --stapm-limit=28000 --fast-limit=35000 --slow-limit=28000
+           ryzenadj --stapm-limit=8000 --fast-limit=10000 --slow-limit=8000
+           
         '';
       };
 
