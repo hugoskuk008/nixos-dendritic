@@ -15,6 +15,7 @@ in {
       system
       security
       gluetun
+      tlp
       vpn-gui
       locale
       gnome
@@ -24,6 +25,7 @@ in {
       office
       rdp
       firefox
+      ryzenadj
 #   hyprland
 #     niri
   ])

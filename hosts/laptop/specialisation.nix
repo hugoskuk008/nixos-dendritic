@@ -2,7 +2,7 @@
 {
   specialisation.nvidia-offload.configuration = {
    
-
+services.tlp.enable = lib.mkForce false;
 
 
    system.nixos.tags = [ "nvidia-offload" ];
