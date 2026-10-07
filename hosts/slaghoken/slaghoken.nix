@@ -1,15 +1,20 @@
-{ config, inputs, ... }: 
+{ config, inputs, secrets,... }: 
 let
   args = {configname = "slaghoken"; user = "admin";};
 in {
   flake.nixosConfigurations.slaghoken = inputs.nixpkgs.lib.nixosSystem {
-   specialArgs = args; 
+   specialArgs = { 
+       inherit args; 
+       inherit secrets;
+       inherit (args) configname user;};
     modules = (with config.flake.modules.nixos;
 [
       inputs.home-manager.nixosModules.home-manager
       bootloader
       system
       locale
+      gluetun
+      vpn-gui
       security
 #      gnome
       nvim
@@ -18,6 +23,7 @@ in {
       rdp
    hyprland
    firefox
+   Slaghoken
 #     niri
   ])
   ++[
@@ -35,8 +41,10 @@ in {
        config.flake.modules.homeManager.hyprland
 #      config.flake.modules.homeManager.niri
       config.flake.modules.homeManager.zsh
+      config.flake.modules.homeManager.Slaghoken
       ];
       home.stateVersion = "26.05";
+          
           };
 
 

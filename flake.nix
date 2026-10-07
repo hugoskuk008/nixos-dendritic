@@ -16,6 +16,8 @@ secrets = builtins.fromJSON (builtins.readFile "${self}/secrets/secrets.json");
 in 
     inputs.flake-parts.lib.mkFlake { inherit inputs; } {
       systems = [ "x86_64-linux" ];
+      
+       _module.args.secrets = secrets;
 
       imports = [
         inputs.flake-parts.flakeModules.modules       

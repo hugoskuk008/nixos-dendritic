@@ -26,6 +26,7 @@
       pavucontrol 
       mesa-demos
       vulkan-tools
+      playerctl
     ];
   };
 
