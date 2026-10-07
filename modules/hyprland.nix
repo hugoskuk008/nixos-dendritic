@@ -27,6 +27,9 @@
       mesa-demos
       vulkan-tools
       playerctl
+      nerd-fonts.geist-mono
+      fira-sans
+      font-awesome
     ];
   };
 

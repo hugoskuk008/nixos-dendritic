@@ -4,7 +4,7 @@ flake.modules.nixos.Slaghoken = {pkgs, ...}: {
   environment.systemPackages = with pkgs; [
     lutris
     spotify
-
+    heroic
     ];
 
 
