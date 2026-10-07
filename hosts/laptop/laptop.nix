@@ -9,6 +9,7 @@ in {
       inputs.home-manager.nixosModules.home-manager
       bootloader
       system
+      security
       locale
       gnome
       nvim
@@ -25,7 +26,8 @@ in {
 
   
 {
-         
+         boot.blacklistedKernelModules = [ "uvcvideo" ];
+
       home-manager.extraSpecialArgs = args;
         programs.firefox.enable=true;
         nixpkgs.hostPlatform = "x86_64-linux";  
