@@ -9,6 +9,7 @@ vim
 git
 btop
 wget
+git-crypt
 ]; 
 system.stateVersion = "26.05";
 hardware.enableRedistributableFirmware = true;
