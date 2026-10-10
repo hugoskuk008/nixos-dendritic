@@ -19,7 +19,13 @@ flake.modules.homeManager.Slaghoken = {pkgs, ...}: {
 
   };
 
+flake.modules.nixos.Laptop = {pkgs, ...}: {
 
+         environment.systemPackages = with pkgs; [
+           discord 
+           spotify
+         ];
+};
 
 
 }

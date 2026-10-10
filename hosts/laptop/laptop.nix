@@ -1,4 +1,4 @@
-{ config, inputs, secrets, ... }: 
+{ config, inputs, secrets,pkgs, ... }: 
 let
   args = {configname = "laptop"; user = "admin";};
 in {
@@ -18,16 +18,20 @@ in {
       tlp
       vpn-gui
       locale
+      autoupdates
+      garbagecleaner
       gnome
       nvim
-      steam
+#     steam
       dgpuService
-      office
-      rdp
+ #     office
+#      rdp
       firefox
       ryzenadj
+  #    brave-origin
 #   hyprland
 #     niri
+      Laptop
   ])
   ++[
     ./hardware-configuration.nix
