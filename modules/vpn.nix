@@ -2,11 +2,8 @@
 
 flake.modules.nixos.gluetun = {config, pkgs,...}: {
  environment.systemPackages = [pkgs.iproute2];
-   sops.secrets."gluetun/env" = {
-    sopsFile = ../secrets/wg.env;
-    format   = "dotenv";
-    mode     = "0400";
-    }; 
+     sops.secrets."airvpn/wg-privateKey"   = { mode = "0400"; };
+     sops.secrets."airvpn/wg-presharedKey" = { mode = "0400"; };
 
    systemd.services.vpn-netns = {
       description = "Create the VPN network namespace";
@@ -70,6 +67,8 @@ flake.modules.nixos.gluetun = {config, pkgs,...}: {
 
           VPN_SERVICE_PROVIDER     = "airvpn";
           VPN_TYPE                 = "wireguard";
+          WIREGUARD_PRIVATE_KEY_SECRETFILE = config.sops.secrets."airvpn/wg-privateKey".path;
+          WIREGUARD_PRESHARED_KEY_SECRETFILE = config.sops.secrets."airvpn/wg-presharedKey".path;
           WIREGUARD_ADDRESSES      = "10.174.25.121/32";
           SERVER_COUNTRIES         = "Netherlands";
           #FIREWALL_VPN_INPUT_PORTS = "";
@@ -78,7 +77,6 @@ flake.modules.nixos.gluetun = {config, pkgs,...}: {
 
           
           };
-           environmentFiles = [ config.sops.secrets."gluetun/env".path ];
           extraOptions = [
             "--network=ns:/run/netns/vpn"
             "--cap-add=NET_ADMIN"
