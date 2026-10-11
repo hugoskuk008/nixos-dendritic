@@ -1,7 +1,13 @@
 {...}:{
 
-flake.modules.nixos.gluetun = {pkgs,secrets,...}: {
+flake.modules.nixos.gluetun = {config, pkgs,...}: {
  environment.systemPackages = [pkgs.iproute2];
+   sops.secrets."gluetun/env" = {
+    sopsFile = ../secrets/wg.env;
+    format   = "dotenv";
+    mode     = "0400";
+    }; 
+
    systemd.services.vpn-netns = {
       description = "Create the VPN network namespace";
       wantedBy = [ "multi-user.target" ];
@@ -39,7 +45,7 @@ flake.modules.nixos.gluetun = {pkgs,secrets,...}: {
       
       networking.nat = {
         enable = true;
-        externalInterface = "wlp99s0"; # Replace with the host's uplink interface.
+        externalInterface = "eno1"; # Replace with the host's uplink interface.
         internalIPs = [ "10.203.0.2" ];
     };
 
@@ -57,19 +63,22 @@ flake.modules.nixos.gluetun = {pkgs,secrets,...}: {
       containers = {
         gluetun = {
           image = "docker.io/qmcgaw/gluetun:latest";
-
+          volumes = [
+               "/run/secrets:/run/secrets:ro"
+            ];
           environment = {
 
           VPN_SERVICE_PROVIDER     = "airvpn";
           VPN_TYPE                 = "wireguard";
-          WIREGUARD_PRIVATE_KEY    = secrets.airvpn."wg-privateKey";
           WIREGUARD_ADDRESSES      = "10.174.25.121/32";
-          WIREGUARD_PRESHARED_KEY  = secrets.airvpn."wg-presharedKey";
           SERVER_COUNTRIES         = "Netherlands";
           #FIREWALL_VPN_INPUT_PORTS = "";
-          TZ                       = "Europe/Stockholm";
+          TZ = "Europe/Stockholm";
+
+
           
           };
+           environmentFiles = [ config.sops.secrets."gluetun/env".path ];
           extraOptions = [
             "--network=ns:/run/netns/vpn"
             "--cap-add=NET_ADMIN"

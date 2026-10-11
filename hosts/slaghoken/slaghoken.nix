@@ -1,12 +1,11 @@
 { config, inputs, secrets,... }: 
 let
-  args = {configname = "slaghoken"; user = "admin";};
+  args = {configname = "slaghoken"; user = "admin"; sopsSshkey = "/home/admin/.ssh/slaghoken";};
 in {
   flake.nixosConfigurations.slaghoken = inputs.nixpkgs.lib.nixosSystem {
    specialArgs = { 
        inherit args; 
-       inherit secrets;
-       inherit (args) configname user;};
+       inherit (args) configname user sopsSshkey;};
     modules = (with config.flake.modules.nixos;
 [
       inputs.home-manager.nixosModules.home-manager
@@ -15,8 +14,9 @@ in {
       locale
       gluetun
       vpn-gui
-      security
+  #    security
 #      gnome
+      sops
       nvim
       steam
       office
@@ -37,7 +37,7 @@ in {
    home-manager.users.${args.user} = {
       imports = [
       config.flake.modules.homeManager.nvim
-      config.flake.modules.homeManager.gnome
+#      config.flake.modules.homeManager.gnome
        config.flake.modules.homeManager.hyprland
 #      config.flake.modules.homeManager.niri
       config.flake.modules.homeManager.zsh
