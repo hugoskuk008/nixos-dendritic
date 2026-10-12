@@ -4,7 +4,7 @@ let
   configname = "slaghoken"; 
   user = "admin"; 
   sopsSshkey = "/home/admin/.ssh/slaghoken";
-  currentTheme = "nord";
+  currentTheme = "gruvbox";
   };
 in {
   flake.nixosConfigurations.slaghoken = inputs.nixpkgs.lib.nixosSystem {
