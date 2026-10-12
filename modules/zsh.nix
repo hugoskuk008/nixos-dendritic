@@ -10,7 +10,7 @@ programs.zsh = {
 
   shellAliases = {
     vim = "nvim";
-    nrb = "sudo nixos-rebuild switch --flake ~/nixos-dendritic#slaghoken";
+    nrb = "nh os switch";
   };
 
   history = {
@@ -20,6 +20,8 @@ programs.zsh = {
 
   # Add raw commands that would normally go into .zshrc
   initExtra = ''
+  
+  eval "$(zoxide init zsh)"
   '';
 };
 

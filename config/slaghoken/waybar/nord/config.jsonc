@@ -1,0 +1,44 @@
+[
+{
+    "output":"DP-1",
+	// "layer": "top", // Waybar at top layer
+    // "position": "bottom", // Waybar position (top|bottom|left|right)
+	 // Waybar height (to be removed for auto height)
+    // "width": 1280, // Waybar width
+    "spacing": 4, // Gaps between modules (4px)
+    // Choose the order of the modules
+    "modules-left": ["wlr/taskbar"],
+    "modules-center": ["hyprland/workspaces"],
+    "modules-right": [ "clock"],
+    "include": ["/home/admin/.config/waybar/modules.json"]
+  },
+
+
+{
+    "output":"DP-3",
+	// "layer": "top", // Waybar at top layer
+    // "position": "bottom", // Waybar position (top|bottom|left|right)
+	//"height": 35, // Waybar height (to be removed for auto height)
+    // "width": 1280, // Waybar width
+    "spacing": 4, // Gaps between modules (4px)
+    // Choose the order of the modules
+    "modules-left": ["hyprland/workspaces"],
+    "modules-center": ["hyprland/window"],
+    "modules-right": ["mpd", "pulseaudio", "clock", "tray"],
+    "include": ["/home/admin/.config/waybar/modules.json"]
+  },
+
+  {
+    "output":"HDMI-A-1",
+	// "layer": "top", // Waybar at top layer
+    // "position": "bottom", // Waybar position (top|bottom|left|right)
+	//boot/"height": 35, // Waybar height (to be removed for auto height)
+    // "width": 1280, // Waybar width
+    "spacing": 4, // Gaps between modules (4px)
+    // Choose the order of the modules
+    "modules-left": ["hyprland/workspaces"],
+    "modules-center": [""],
+    "modules-right": ["clock"],
+    "include": ["/home/admin/.config/waybar/modules.json"]
+  }
+]

@@ -1,0 +1,354 @@
+/* -----------------------------------------------------
+ * Gruvbox Dark palette
+ * ----------------------------------------------------- */
+ 
+@define-color bg0_h   #1d2021;
+@define-color bg0     #282828;
+@define-color bg1     #3c3836;
+@define-color bg2     #504945;
+@define-color bg3     #665c54;
+@define-color bg4     #7c6f64;
+ 
+@define-color fg0     #fbf1c7;
+@define-color fg1     #ebdbb2;
+@define-color fg2     #d5c4a1;
+@define-color fg3     #bdae93;
+@define-color gray    #928374;
+ 
+@define-color red     #cc241d;
+@define-color red_b   #fb4934;
+@define-color green   #98971a;
+@define-color green_b #b8bb26;
+@define-color yellow  #d79921;
+@define-color yellow_b #fabd2f;
+@define-color blue    #458588;
+@define-color blue_b  #83a598;
+@define-color purple  #b16286;
+@define-color purple_b #d3869b;
+@define-color aqua    #689d6a;
+@define-color aqua_b  #8ec07c;
+@define-color orange  #d65d0e;
+@define-color orange_b #fe8019;
+ 
+/* -----------------------------------------------------
+ * General
+ * ----------------------------------------------------- */
+ 
+* {
+    font-family: "Fira Sans Semibold", FontAwesome, Roboto, Helvetica, Arial, sans-serif;
+    border: none;
+    border-radius: 0px;
+}
+ 
+window#waybar {
+    background-color: transparent;
+    border-bottom: 0px solid @bg0;
+    color: @fg1;
+    transition-property: background-color;
+    transition-duration: .5s;
+    margin: 2px 2px;
+}
+ 
+/* -----------------------------------------------------
+ * Workspaces
+ * ----------------------------------------------------- */
+ 
+#workspaces {
+    background: @bg1;
+    margin: 4px 3px 6px 1px;
+    padding: 2px 1px;
+    border-radius: 13px;
+    border: 5px;
+    font-weight: bold;
+    font-style: normal;
+    opacity: 0.9;
+    font-size: 17px;
+    color: @fg1;
+}
+ 
+#workspaces button {
+    padding: 0px 5px;
+    margin: 4px 3px;
+    border-radius: 13px;
+    border: 0px;
+    color: @fg3;
+    background-color: @bg2;
+    transition: all 0.3s ease-in-out;
+    opacity: 1;
+}
+ 
+#workspaces button.active {
+    color: @bg0_h;
+    background: @yellow_b;
+    border-radius: 13px;
+    min-width: 35px;
+    transition: all 0.2s ease-in-out;
+    opacity: 1.0;
+}
+ 
+#workspaces button.urgent {
+    color: @bg0_h;
+    background: @red_b;
+}
+ 
+#workspaces button:hover {
+    color: @fg0;
+    background: @bg3;
+    border-radius: 12px;
+    opacity: 0.8;
+}
+ 
+#mode {
+    background-color: @bg1;
+    color: @orange_b;
+    border-bottom: 3px solid @orange_b;
+}
+ 
+/* -----------------------------------------------------
+ * Shared module styling
+ * ----------------------------------------------------- */
+ 
+#clock,
+#battery,
+#cpu,
+#memory,
+#disk,
+#temperature,
+#backlight,
+#network,
+#pulseaudio,
+#wireplumber,
+#custom-media,
+#tray,
+#mode,
+#idle_inhibitor,
+#scratchpad,
+#mpd {
+    padding: 0 10px;
+    color: @fg1;
+}
+ 
+#window,
+#workspaces {
+    margin: 0 4px;
+}
+ 
+/* If workspaces is the leftmost module, omit left margin */
+.modules-left > widget:first-child > #workspaces {
+    margin-left: 2px;
+}
+ 
+/* If workspaces is the rightmost module, omit right margin */
+.modules-right > widget:last-child > #workspaces {
+    margin-right: 2px;
+}
+ 
+#window {
+    color: @fg2;
+}
+ 
+/* -----------------------------------------------------
+ * Modules
+ * ----------------------------------------------------- */
+ 
+#clock {
+    background-color: @bg1;
+    color: @yellow_b;
+    opacity: 0.9;
+    border-radius: 7px;
+    margin-top: 2px;
+    font-weight: bold;
+}
+ 
+#battery {
+    background-color: @fg1;
+    color: @bg0_h;
+}
+ 
+#battery.charging,
+#battery.plugged {
+    color: @bg0_h;
+    background-color: @green_b;
+}
+ 
+@keyframes blink {
+    to {
+        background-color: @fg1;
+        color: @bg0_h;
+    }
+}
+ 
+#battery.critical:not(.charging) {
+    background-color: @red_b;
+    color: @bg0_h;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+ 
+label:focus {
+    background-color: @bg0_h;
+}
+ 
+#cpu {
+    background-color: @bg1;
+    color: @aqua_b;
+    border-radius: 7px;
+    margin-top: 2px;
+}
+ 
+#memory {
+    background-color: @bg1;
+    color: @purple_b;
+    border-radius: 7px;
+    margin-top: 2px;
+}
+ 
+#disk {
+    background-color: @bg1;
+    color: @orange_b;
+    border-radius: 7px;
+    margin-top: 2px;
+}
+ 
+#backlight {
+    background-color: @bg1;
+    color: @yellow_b;
+}
+ 
+#network {
+    background-color: @bg1;
+    color: @blue_b;
+    border-radius: 7px;
+    margin-top: 2px;
+}
+ 
+#network.disconnected {
+    background-color: @red_b;
+    color: @bg0_h;
+}
+ 
+#pulseaudio {
+    background-color: @bg1;
+    color: @green_b;
+    border-radius: 7px;
+    margin-top: 2px;
+    opacity: 0.9;
+}
+ 
+#pulseaudio.muted {
+    background-color: @bg2;
+    color: @gray;
+}
+ 
+#wireplumber {
+    background-color: @bg1;
+    color: @fg1;
+}
+ 
+#wireplumber.muted {
+    background-color: @red_b;
+    color: @bg0_h;
+}
+ 
+#custom-media {
+    background-color: @green_b;
+    color: @bg0_h;
+    min-width: 100px;
+}
+ 
+#custom-media.custom-spotify {
+    background-color: @green_b;
+}
+ 
+#custom-media.custom-vlc {
+    background-color: @orange_b;
+}
+ 
+#temperature {
+    background-color: @orange_b;
+    color: @bg0_h;
+}
+ 
+#temperature.critical {
+    background-color: @red_b;
+    color: @bg0_h;
+}
+ 
+#tray {
+    background-color: rgba(0, 0, 0, 0);
+    opacity: 0.8;
+}
+ 
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+ 
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+    background-color: @red_b;
+}
+ 
+#idle_inhibitor {
+    background-color: @bg1;
+    color: @fg3;
+}
+ 
+#idle_inhibitor.activated {
+    background-color: @fg1;
+    color: @bg0_h;
+}
+ 
+#mpd {
+    background-color: @aqua_b;
+    color: @bg0_h;
+}
+ 
+#mpd.disconnected {
+    background-color: @red_b;
+}
+ 
+#mpd.stopped {
+    background-color: @bg3;
+    color: @fg1;
+}
+ 
+#mpd.paused {
+    background-color: @aqua;
+}
+ 
+#language {
+    background: @aqua_b;
+    color: @bg0_h;
+    padding: 0 5px;
+    margin: 0 5px;
+    min-width: 16px;
+}
+ 
+#keyboard-state {
+    background: @green_b;
+    color: @bg0_h;
+    padding: 0 0px;
+    margin: 0 5px;
+    min-width: 16px;
+}
+ 
+#keyboard-state > label {
+    padding: 0 5px;
+}
+ 
+#keyboard-state > label.locked {
+    background: rgba(0, 0, 0, 0.2);
+}
+ 
+#scratchpad {
+    background: rgba(0, 0, 0, 0.2);
+}
+ 
+#scratchpad.empty {
+    background-color: transparent;
+}
+ 
+

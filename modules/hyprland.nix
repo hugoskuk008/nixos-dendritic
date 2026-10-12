@@ -33,19 +33,22 @@
     ];
   };
 
-  flake.modules.homeManager.hyprland = { configname, pkgs, ... }: {
+  flake.modules.homeManager.hyprland = { configname, currentTheme, pkgs, ... }: {
     programs.zsh.enable = true;
 
     xdg.configFile."hypr".source =
-      ../config/${configname}/hyprland;
+      ../config/${configname}/hyprland/${currentTheme};
+    
     xdg.configFile."kitty".source =
-      ../config/kitty;
+      ../config/kitty/${currentTheme};
+
+    
     xdg.configFile."waybar".source =
-      ../config/${configname}/waybar;
+      ../config/${configname}/waybar/${currentTheme};
     xdg.configFile."rofi".source = 
-      ../config/rofi;
+      ../config/rofi/${currentTheme};
     xdg.configFile."waypaper".source = 
-    ../config/waypaper;
+    ../config/waypaper/${currentTheme};
     home.pointerCursor = {
       enable = true;
       gtk.enable = true;

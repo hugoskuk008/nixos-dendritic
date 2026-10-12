@@ -1,6 +1,11 @@
 { config, inputs, secrets,... }: 
 let
-  args = {configname = "slaghoken"; user = "admin"; sopsSshkey = "/home/admin/.ssh/slaghoken";};
+  args = {
+  configname = "slaghoken"; 
+  user = "admin"; 
+  sopsSshkey = "/home/admin/.ssh/slaghoken";
+  currentTheme = "nord";
+  };
 in {
   flake.nixosConfigurations.slaghoken = inputs.nixpkgs.lib.nixosSystem {
    specialArgs = { 
@@ -14,7 +19,7 @@ in {
       locale
       gluetun
       vpn-gui
-  #    security
+security
 #      gnome
       sops
       nvim
@@ -29,10 +34,12 @@ in {
   ++[
     ./hardware-configuration.nix
     ./common.nix
+    ./nh.nix
 
   
 {
-  
+    home-manager.backupFileExtension = null;
+ 
    home-manager.extraSpecialArgs = args;
    home-manager.users.${args.user} = {
       imports = [
@@ -44,7 +51,7 @@ in {
       config.flake.modules.homeManager.Slaghoken
       ];
       home.stateVersion = "26.05";
-          
+               
           };
 
 
@@ -55,5 +62,25 @@ in {
         }
       ];
     };
+  flake.homeConfigurations."admin@slaghoken" =
+  inputs.home-manager.lib.homeManagerConfiguration {
+    pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
+    extraSpecialArgs = args;
+
+    modules = [
+      config.flake.modules.homeManager.nvim
+      config.flake.modules.homeManager.hyprland
+      config.flake.modules.homeManager.zsh
+      config.flake.modules.homeManager.Slaghoken
+
+      {
+        home.username = "admin";
+        home.homeDirectory = "/home/admin";
+        home.stateVersion = "26.05";
+      }
+    ];
+  };
+
+
   }
 
