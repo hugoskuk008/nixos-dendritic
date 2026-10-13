@@ -32,9 +32,9 @@ hl.monitor({
     position = "0x0",
     scale    = "auto",
     bitdepth = 10,
-    cm = "hdr",
-    sdrbrightness = 1.26,
-    sdrsaturation = 0.98,
+    -- cm = "hdr",
+    --sdrbrightness = 1.26,
+    --sdrsaturation = 0.98,
 })
 
 hl.monitor({
@@ -73,9 +73,10 @@ local menu        = "hyprlauncher"
    hl.exec_cmd("waybar")
    hl.exec_cmd("waypaper -r")
 
+
  end)
 
-
+hl.exec_cmd("/home/admin/test.sh")
 -------------------------------
 ---- ENVIRONMENT VARIABLES ----
 -------------------------------
@@ -118,7 +119,7 @@ hl.config({
         border_size = 2,
 
         col = {
-            active_border   = { colors = {"rgba(33ccffee)", "rgba(00ff99ee)"}, angle = 45 },
+            active_border   = { colors = {"rgba(595959aa)", "rgba(595959aa)"}, angle = 45 },
             inactive_border = "rgba(595959aa)",
         },
 

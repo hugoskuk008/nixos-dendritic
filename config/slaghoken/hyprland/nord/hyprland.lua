@@ -72,9 +72,9 @@ local menu        = "hyprlauncher"
  hl.on("hyprland.start", function () 
    hl.exec_cmd("waybar")
    hl.exec_cmd("waypaper -r")
-
  end)
 
+hl.exec_cmd("/home/admin/test.sh")
 
 -------------------------------
 ---- ENVIRONMENT VARIABLES ----

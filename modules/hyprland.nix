@@ -36,19 +36,27 @@
   flake.modules.homeManager.hyprland = { configname, currentTheme, pkgs, ... }: {
     programs.zsh.enable = true;
 
-    xdg.configFile."hypr".source =
-      ../config/${configname}/hyprland/${currentTheme};
-    
+    xdg.configFile."hypr" ={
+      source =  ../config/${configname}/hyprland/${currentTheme};
+};
     xdg.configFile."kitty".source =
       ../config/kitty/${currentTheme};
 
     
-    xdg.configFile."waybar".source =
-      ../config/${configname}/waybar/${currentTheme};
+    xdg.configFile."waybar" = {
+     source =  ../config/${configname}/waybar/${currentTheme};
+    
+    };
     xdg.configFile."rofi".source = 
       ../config/rofi/${currentTheme};
-    xdg.configFile."waypaper".source = 
-    ../config/waypaper/${currentTheme};
+    
+    xdg.configFile."waypaper" = {
+      source = ../config/waypaper/${currentTheme};
+      onChange = ''
+    ${pkgs.waypaper}/bin/waypaper --restore
+  '';
+
+    };
     home.pointerCursor = {
       enable = true;
       gtk.enable = true;

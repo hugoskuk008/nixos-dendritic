@@ -11,7 +11,7 @@ configuration {
 }
 
 
-@theme "~/.config/rofi/gruvbox-dark-soft.rasi"
+@theme "~/.config/rofi/gruvbox-material.rasi"
 
 listview {
 	lines: 10;
