@@ -3,7 +3,6 @@
 flake.modules.nixos.Slaghoken = {pkgs, ...}: {
   environment.systemPackages = with pkgs; [
     lutris
-    spotify
     heroic
     ];
 
@@ -16,6 +15,7 @@ flake.modules.homeManager.Slaghoken = {pkgs, ...}: {
        fastfetch
        fzf
        zoxide
+       spotify
     ];
 
 
@@ -25,7 +25,7 @@ flake.modules.nixos.Laptop = {pkgs, ...}: {
 
          environment.systemPackages = with pkgs; [
            discord 
-           spotify
+           spotify-qt
          ];
 };
 

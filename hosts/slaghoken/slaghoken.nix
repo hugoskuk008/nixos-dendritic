@@ -38,8 +38,8 @@ security
 
   
 {
+    home-manager.useGlobalPkgs = true;
     home-manager.backupFileExtension = null;
- 
    home-manager.extraSpecialArgs = args;
    home-manager.users.${args.user} = {
       imports = [
