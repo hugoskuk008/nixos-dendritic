@@ -19,9 +19,11 @@ in {
       locale
       gluetun
       vpn-gui
+#      qemu
 security
 #      gnome
       sops
+      ai
       nvim
       steam
       office
@@ -38,8 +40,13 @@ security
 
   
 {
-    home-manager.useGlobalPkgs = true;
-    home-manager.backupFileExtension = null;
+ ai = {
+    backend = "llama";
+    harness = "hermes";
+   };
+   services.lact.enable = true;
+   home-manager.useGlobalPkgs = true;
+   home-manager.backupFileExtension = null;
    home-manager.extraSpecialArgs = args;
    home-manager.users.${args.user} = {
       imports = [

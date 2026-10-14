@@ -4,8 +4,9 @@ flake.modules.nixos.Slaghoken = {pkgs, ...}: {
   environment.systemPackages = with pkgs; [
     lutris
     heroic
+    bazaar
     ];
-
+services.flatpak.enable = true;
 
   };
 
@@ -15,7 +16,6 @@ flake.modules.homeManager.Slaghoken = {pkgs, ...}: {
        fastfetch
        fzf
        zoxide
-       spotify
     ];
 
 

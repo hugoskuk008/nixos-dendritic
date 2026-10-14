@@ -3,7 +3,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-parts.url = "github:hercules-ci/flake-parts";
     import-tree.url = "github:vic/import-tree";
-    
+    hermes-agent.url = "github:NousResearch/hermes-agent";
     sls-steam.url = "github:AceSLS/SLSsteam";
     acella.url = "github:ciscosweater/enter-the-wired";
   
