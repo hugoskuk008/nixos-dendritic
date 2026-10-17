@@ -4,7 +4,7 @@ let
   configname = "slaghoken"; 
   user = "admin"; 
   sopsSshkey = "/home/admin/.ssh/slaghoken";
-  currentTheme = "gruvbox";
+  currentTheme = "nord";
   };
 in {
   flake.nixosConfigurations.slaghoken = inputs.nixpkgs.lib.nixosSystem {
@@ -20,8 +20,8 @@ in {
       gluetun
       vpn-gui
 #      qemu
-tailscale
-security
+      twingate
+      security
 #      gnome
       sops
       ai
@@ -33,7 +33,7 @@ security
    firefox
    Slaghoken
 #     niri
-
+   git
   ])
   ++[
     ./hardware-configuration.nix
@@ -58,7 +58,8 @@ security
 #      config.flake.modules.homeManager.niri
       config.flake.modules.homeManager.zsh
       config.flake.modules.homeManager.Slaghoken
-          config.flake.modules.homeManager.theme-switch
+      config.flake.modules.homeManager.theme-switch
+      config.flake.modules.homeManager.theme-switch-gui
       ];
       home.stateVersion = "26.05";
                
@@ -72,24 +73,6 @@ security
         }
       ];
     };
-  flake.homeConfigurations."admin@slaghoken" =
-  inputs.home-manager.lib.homeManagerConfiguration {
-    pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
-    extraSpecialArgs = args;
-
-    modules = [
-      config.flake.modules.homeManager.nvim
-      config.flake.modules.homeManager.hyprland
-      config.flake.modules.homeManager.zsh
-      config.flake.modules.homeManager.Slaghoken
-      config.flake.modules.homeManager.theme-switch
-      {
-        home.username = "admin";
-        home.homeDirectory = "/home/admin";
-        home.stateVersion = "26.05";
-      }
-    ];
-  };
 
 
   }
