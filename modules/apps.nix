@@ -5,9 +5,11 @@ flake.modules.nixos.Slaghoken = {pkgs, ...}: {
     lutris
     heroic
     bazaar
-    ];
+    prismlauncher
+    sops
+];
 services.flatpak.enable = true;
-
+programs.java = {enable = true; package = pkgs.jdk21;};
   };
 
 flake.modules.homeManager.Slaghoken = {pkgs, ...}: {

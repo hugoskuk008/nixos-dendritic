@@ -11,6 +11,7 @@
         inputs.hermes-agent.nixosModules.default
       ];
 
+
       options.ai = {
         backend = mkOption {
           type = types.enum [ "none" "llama" ];
@@ -33,6 +34,10 @@
 
       config = mkMerge [
         (mkIf (config.ai.harness == "hermes") {
+              environment.systemPackages = [
+      config.services.hermes-agent.package
+    ];
+
           services.hermes-agent = {
             enable = true;
 

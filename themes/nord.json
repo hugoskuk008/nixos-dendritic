@@ -1,0 +1,8 @@
+{ 
+    "theme": "nord", 
+    "host": "slaghoken", 
+    "apps": ["waypaper", "kitty", "hyprland", "rofi","waybar"], 
+    "command": "hyprctl reload" 
+
+}
+

@@ -20,6 +20,7 @@ in {
       gluetun
       vpn-gui
 #      qemu
+tailscale
 security
 #      gnome
       sops
@@ -32,6 +33,7 @@ security
    firefox
    Slaghoken
 #     niri
+
   ])
   ++[
     ./hardware-configuration.nix
@@ -56,6 +58,7 @@ security
 #      config.flake.modules.homeManager.niri
       config.flake.modules.homeManager.zsh
       config.flake.modules.homeManager.Slaghoken
+          config.flake.modules.homeManager.theme-switch
       ];
       home.stateVersion = "26.05";
                
@@ -79,7 +82,7 @@ security
       config.flake.modules.homeManager.hyprland
       config.flake.modules.homeManager.zsh
       config.flake.modules.homeManager.Slaghoken
-
+      config.flake.modules.homeManager.theme-switch
       {
         home.username = "admin";
         home.homeDirectory = "/home/admin";

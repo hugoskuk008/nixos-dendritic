@@ -33,30 +33,55 @@
     ];
   };
 
-  flake.modules.homeManager.hyprland = { configname, currentTheme, pkgs, ... }: {
+  flake.modules.homeManager.hyprland = { configname, user , config, currentTheme, pkgs, lib, ... }: 
+let 
+reloadHyprland = pkgs.writeShellScript "reload-hyprland" ''
+    for rt in /run/user/*; do
+      [ -d "$rt/hypr" ] || continue
+      for sig in "$rt"/hypr/*; do
+        [ -S "$sig/.socket.sock" ] || continue
+        XDG_RUNTIME_DIR="$rt" \
+        HYPRLAND_INSTANCE_SIGNATURE="''${sig##*/}" \
+          ${pkgs.hyprland}/bin/hyprctl reload || true
+      done
+    done
+  '';
+in
+  {
     programs.zsh.enable = true;
 
     xdg.configFile."hypr" ={
       source =  ../config/${configname}/hyprland/${currentTheme};
+      force = true;
 };
-    xdg.configFile."kitty".source =
-      ../config/kitty/${currentTheme};
+
+
+    xdg.configFile."kitty"={ 
+     source =  ../config/kitty/${currentTheme};
+     force = true;  
+       };
 
     
     xdg.configFile."waybar" = {
      source =  ../config/${configname}/waybar/${currentTheme};
+     force = true;
     
     };
-    xdg.configFile."rofi".source = 
-      ../config/rofi/${currentTheme};
+    xdg.configFile."rofi" = {
+    source = ../config/rofi/${currentTheme};
+    force = true;  
+      };
     
     xdg.configFile."waypaper" = {
       source = ../config/waypaper/${currentTheme};
-      onChange = ''
-    ${pkgs.waypaper}/bin/waypaper --restore
-  '';
-
-    };
+      force = true;
+     };
+   
+   home.activation.reloadHyprland = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+      run ${reloadHyprland}
+    '';
+    
+    
     home.pointerCursor = {
       enable = true;
       gtk.enable = true;
