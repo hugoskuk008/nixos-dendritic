@@ -4,42 +4,20 @@ let
   configname = "slaghoken"; 
   user = "admin"; 
   sopsSshkey = "/home/admin/.ssh/slaghoken";
-  currentTheme = "nord";
+  currentTheme = "gruvbox";
   };
+    mkHost = import ../mk-host.nix{inherit config inputs;};
+
 in {
-  flake.nixosConfigurations.slaghoken = inputs.nixpkgs.lib.nixosSystem {
-   specialArgs = { 
-       inherit args; 
-       inherit (args) configname user sopsSshkey;};
-    modules = (with config.flake.modules.nixos;
-[
-      inputs.home-manager.nixosModules.home-manager
-      bootloader
-      system
-      locale
-      gluetun
-      vpn-gui
-#      qemu
-      twingate
-      security
-#      gnome
-      sops
-      ai
-      nvim
-      steam
-      office
-      rdp
-   hyprland
-   firefox
-   Slaghoken
-#     niri
-   git
-  ])
-  ++[
+  flake.nixosConfigurations.slaghoken = mkHost {
+  name = "slaghoken";
+  inherit (args) user;
+  selection = ./modules.json;
+  specialArgs = { inherit args; inherit (args) configname user sopsSshkey; };
+  extraModules = [
     ./hardware-configuration.nix
     ./common.nix
     ./nh.nix
-
   
 {
  ai = {
@@ -50,20 +28,7 @@ in {
    home-manager.useGlobalPkgs = true;
    home-manager.backupFileExtension = null;
    home-manager.extraSpecialArgs = args;
-   home-manager.users.${args.user} = {
-      imports = [
-      config.flake.modules.homeManager.nvim
-#      config.flake.modules.homeManager.gnome
-       config.flake.modules.homeManager.hyprland
-#      config.flake.modules.homeManager.niri
-      config.flake.modules.homeManager.zsh
-      config.flake.modules.homeManager.Slaghoken
-      config.flake.modules.homeManager.theme-switch
-      config.flake.modules.homeManager.theme-switch-gui
-      ];
-      home.stateVersion = "26.05";
-               
-          };
+      home-manager.users.${args.user}.home.stateVersion = "26.05";
 
 
 

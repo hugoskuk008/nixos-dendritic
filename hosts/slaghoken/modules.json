@@ -1,0 +1,52 @@
+{
+  "nixos": {
+    "enabled": [
+      "Slaghoken",
+      "ai",
+      "bootloader",
+      "firefox",
+      "git",
+      "gluetun",
+      "hyprland",
+      "locale",
+      "modules-ctl",
+      "nvim",
+      "office",
+      "rdp",
+      "security",
+      "sops",
+      "steam",
+      "system",
+      "vpn-gui"
+    ],
+    "disabled": [
+      "Laptop",
+      "autoupdates",
+      "brave-origin",
+      "dgpuService",
+      "garbagecleaner",
+      "gnome",
+      "niri",
+      "qemu",
+      "ryzenadj",
+      "steamVanilla",
+      "tailscale",
+      "tlp",
+      "twingate"
+    ]
+  },
+  "homeManager": {
+    "enabled": [
+      "Slaghoken",
+      "hyprland",
+      "nvim",
+      "theme-switch",
+      "theme-switch-gui",
+      "zsh"
+    ],
+    "disabled": [
+      "gnome",
+      "niri"
+    ]
+  }
+}
