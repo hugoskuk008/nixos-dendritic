@@ -296,8 +296,9 @@ hl.device({
 ---------------------
 ---- KEYBINDINGS ----
 ---------------------
-
 local mainMod = "SUPER" -- Sets "Windows" key as main modifier
+hl.bind(mainMod .. "+ C", hl.dsp.exec_cmd("modules-ctl-gui"))
+
 hl.bind(mainMod .. "+ T", hl.dsp.exec_cmd("theme-switch-picker"))
 -- Example binds, see https://wiki.hypr.land/Configuring/Basics/Binds/ for more
 hl.bind(mainMod .. " + RETURN", hl.dsp.exec_cmd(terminal))

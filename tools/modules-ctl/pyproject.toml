@@ -7,9 +7,11 @@ name = "modules-ctl"
 version = "0.1.0"
 description = "Choose which dendritic modules each host imports, as data."
 requires-python = ">=3.11"
+dependencies = []  # tkinter comes from the nixpkgs python, see package.nix
 
 [project.scripts]
 modules-ctl = "modules_ctl.cli:main"
+modules-ctl-gui = "modules_ctl.gui:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
