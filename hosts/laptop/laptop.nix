@@ -1,6 +1,6 @@
 { config, inputs, secrets,pkgs, ... }: 
 let
-  args = {configname = "laptop"; user = "admin";};
+  args = {configname = "laptop"; user = "admin"; currentTheme = "gruvbox";};
 in {
   flake.nixosConfigurations.laptop = inputs.nixpkgs.lib.nixosSystem {
    specialArgs = {
@@ -20,8 +20,10 @@ in {
       locale
       autoupdates
       garbagecleaner
-      gnome
+      sops
+#      gnome
       nvim
+
 #     steam
       dgpuService
  #     office
@@ -29,7 +31,7 @@ in {
       firefox
       ryzenadj
   #    brave-origin
-#   hyprland
+    hyprland
 #     niri
       Laptop
   ])
@@ -48,7 +50,6 @@ in {
              hardware.enableRedistributableFirmware = true;
   
           services.xserver.videoDrivers = ["amdgpu"];
-          services.sshd.enable = true;
       #   services.asusd.enable = true;
         
         users.users.${args.user} = {
@@ -59,9 +60,11 @@ in {
     home-manager.users.${args.user} = {
       imports = [
       config.flake.modules.homeManager.nvim
-      config.flake.modules.homeManager.gnome
- #     config.flake.modules.homeManager.hyprland
+#      config.flake.modules.homeManager.gnome
+        config.flake.modules.homeManager.hyprland
 #      config.flake.modules.homeManager.niri
+      config.flake.modules.homeManager.theme-switch
+      config.flake.modules.homeManager.theme-switch-gui
       ];
       home.stateVersion = "26.05";
           };
