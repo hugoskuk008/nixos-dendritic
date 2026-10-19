@@ -1,6 +1,9 @@
 import json
+import os
+import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 from modules_ctl.gui.client import CliClient, CliCommandError
 from modules_ctl.gui.model import ModuleCommand
@@ -76,7 +79,24 @@ class InvocationTest(unittest.TestCase):
     def test_builds_the_full_argv_with_global_flags_before_the_command(self) -> None:
         argv = CliClient(Path("/r")).invocation("box", ModuleCommand.rebuild())
         self.assertEqual(argv[-5:], ["--repo", "/r", "--host", "box", "rebuild"])
-        self.assertEqual(argv[1:3], ["-m", "modules_ctl"])
+        self.assertEqual(argv[argv.index("-m") : argv.index("-m") + 2], ["-m", "modules_ctl"])
+
+    def test_names_where_the_package_lives_instead_of_relying_on_the_environment(self) -> None:
+        argv = CliClient().invocation("box", ModuleCommand.rebuild())
+        (path_setting,) = [part for part in argv if part.startswith("PYTHONPATH=")]
+        package_root = Path(path_setting.removeprefix("PYTHONPATH="))
+        self.assertTrue((package_root / "modules_ctl" / "cli.py").is_file())
+
+
+class RealSubprocessTest(unittest.TestCase):
+    """Runs the actual CLI, as the GUI does, from an environment that does not know the package."""
+
+    def test_the_cli_starts_when_the_environment_carries_no_package_path(self) -> None:
+        with tempfile.TemporaryDirectory() as repo:
+            (Path(repo) / "hosts" / "box").mkdir(parents=True)
+            bare_environment = {k: v for k, v in os.environ.items() if k != "PYTHONPATH"}
+            with mock.patch.dict(os.environ, bare_environment, clear=True):
+                self.assertEqual(CliClient(Path(repo)).hosts(), ["box"])
 
 
 class PreviewTest(unittest.TestCase):

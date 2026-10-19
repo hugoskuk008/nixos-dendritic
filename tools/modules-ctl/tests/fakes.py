@@ -32,7 +32,7 @@ class RecordingRunner:
 class ScriptedRunner:
     """Stands in for subprocess.run when the GUI client launches modules-ctl.
 
-    Replies are keyed by the arguments after `python -m modules_ctl`, joined by spaces.
+    Replies are keyed by the arguments after the `-m modules_ctl` launch prefix, joined by spaces.
     Anything unscripted succeeds with no output.
     """
 
@@ -41,7 +41,7 @@ class ScriptedRunner:
         self.invocations: list[str] = []
 
     def __call__(self, command: list[str], **_: object) -> subprocess.CompletedProcess[str]:
-        key = " ".join(command[3:])
+        key = " ".join(command[command.index("modules_ctl") + 1 :])
         self.invocations.append(key)
         returncode, stdout, stderr = self._replies.get(key, (0, "", ""))
         return subprocess.CompletedProcess(command, returncode, stdout, stderr)
