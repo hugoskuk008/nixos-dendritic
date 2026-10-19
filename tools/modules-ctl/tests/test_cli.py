@@ -5,7 +5,10 @@ import unittest
 from contextlib import redirect_stderr
 from pathlib import Path
 
+import subprocess
+
 from modules_ctl.cli import main
+from modules_ctl.rebuild import Machine
 from tests.fakes import FakeRegistry
 
 
@@ -62,6 +65,58 @@ class CliTest(unittest.TestCase):
         code, _, err = self.run_cli("status")
         self.assertEqual(code, 1)
         self.assertIn("modules.json", err)
+
+    def machine(self, hostname: str, returncode: int = 0) -> tuple[Machine, list[list[str]]]:
+        sent: list[list[str]] = []
+
+        def run_command(command, **_):
+            sent.append(command)
+            return subprocess.CompletedProcess(command, returncode)
+
+        return Machine(hostname, has_nh=True, run_command=run_command), sent
+
+    def test_rebuild_runs_for_this_machines_host_and_passes_the_exit_status_on(self) -> None:
+        machine, sent = self.machine("box", returncode=3)
+        out = io.StringIO()
+        code = main(["--repo", str(self.repo), "--host", "box", "rebuild"], out=out, machine=machine)
+        self.assertEqual(code, 3)
+        self.assertEqual(sent[0][:3], ["nh", "os", "switch"])
+        self.assertIn(str(self.repo), sent[0])
+
+    def test_rebuild_refuses_other_hosts_unless_forced(self) -> None:
+        (self.repo / "hosts" / "other").mkdir()
+        machine, sent = self.machine("box")
+        err = io.StringIO()
+        with redirect_stderr(err):
+            code = main(["--repo", str(self.repo), "--host", "other", "rebuild"], machine=machine)
+        self.assertEqual((code, sent), (1, []))
+        self.assertIn("not this machine", err.getvalue())
+        main(["--repo", str(self.repo), "--host", "other", "rebuild", "--force"], out=io.StringIO(), machine=machine)
+        self.assertEqual(len(sent), 1)
+
+    def test_rebuild_of_an_unknown_host_fails_before_running_anything(self) -> None:
+        machine, sent = self.machine("nope")
+        with redirect_stderr(io.StringIO()):
+            code = main(["--repo", str(self.repo), "--host", "nope", "rebuild"], machine=machine)
+        self.assertEqual((code, sent), (1, []))
+
+    def test_hosts_lists_directories_under_hosts(self) -> None:
+        (self.repo / "hosts" / "other").mkdir()
+        code, out, _ = self.run_cli("hosts")
+        self.assertEqual((code, out), (0, "box\nother\n"))
+
+    def test_hosts_json_needs_neither_a_valid_host_nor_nix(self) -> None:
+        out = io.StringIO()
+        code = main(["--repo", str(self.repo), "--host", "not-a-host", "hosts", "--json"], out=out)
+        self.assertEqual((code, json.loads(out.getvalue())), (0, ["box"]))
+
+    def test_repo_without_hosts_directory_is_called_out(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            err = io.StringIO()
+            with redirect_stderr(err):
+                code = main(["--repo", directory, "--host", "x", "status"], registry=FakeRegistry())
+            self.assertEqual(code, 1)
+            self.assertIn("no hosts/ directory", err.getvalue())
 
 
 if __name__ == "__main__":

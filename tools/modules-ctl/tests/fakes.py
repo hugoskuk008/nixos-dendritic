@@ -27,3 +27,21 @@ class RecordingRunner:
         self.commands.append(command)
         returncode, stdout, stderr = self._result
         return subprocess.CompletedProcess(command, returncode, stdout, stderr)
+
+
+class ScriptedRunner:
+    """Stands in for subprocess.run when the GUI client launches modules-ctl.
+
+    Replies are keyed by the arguments after `python -m modules_ctl`, joined by spaces.
+    Anything unscripted succeeds with no output.
+    """
+
+    def __init__(self, replies: dict[str, tuple[int, str, str]] | None = None) -> None:
+        self._replies = replies or {}
+        self.invocations: list[str] = []
+
+    def __call__(self, command: list[str], **_: object) -> subprocess.CompletedProcess[str]:
+        key = " ".join(command[3:])
+        self.invocations.append(key)
+        returncode, stdout, stderr = self._replies.get(key, (0, "", ""))
+        return subprocess.CompletedProcess(command, returncode, stdout, stderr)

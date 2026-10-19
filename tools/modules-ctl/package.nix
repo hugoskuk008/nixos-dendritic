@@ -1,8 +1,14 @@
-# nix-build / callPackage expression for modules-ctl.
+# nix-build / callPackage expression for modules-ctl and its GTK front end, modules-ctl-gui.
 #
 # `nix` and `git` are deliberately not wrapped in: the tool must talk to the same nix as the
 # user's session, and it only calls git inside a repository, where git already exists.
-{ lib, python3Packages }:
+{
+  lib,
+  python3Packages,
+  wrapGAppsHook4,
+  gobject-introspection,
+  gtk4,
+}:
 
 python3Packages.buildPythonApplication {
   pname = "modules-ctl";
@@ -22,8 +28,16 @@ python3Packages.buildPythonApplication {
 
   build-system = [ python3Packages.setuptools ];
 
-  propagatedBuildInputs = [ python3Packages.tkinter ];
+  # GTK needs its typelibs and schemas on the environment of modules-ctl-gui.
+  nativeBuildInputs = [ wrapGAppsHook4 gobject-introspection ];
+  buildInputs = [ gtk4 ];
+  dependencies = [ python3Packages.pygobject3 ];
+  dontWrapGApps = true;
+  preFixup = ''
+    makeWrapperArgs+=("''${gappsWrapperArgs[@]}")
+  '';
 
+  # The unit tests never import GTK, so they run without a display.
   doCheck = true;
   checkPhase = ''
     runHook preCheck
@@ -34,7 +48,7 @@ python3Packages.buildPythonApplication {
   pythonImportsCheck = [ "modules_ctl" ];
 
   meta = {
-    description = "Choose which dendritic modules each host imports, as json";
+    description = "Choose which dendritic modules each host imports, as data";
     mainProgram = "modules-ctl";
   };
 }

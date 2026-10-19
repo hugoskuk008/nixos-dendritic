@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
+# Launcher that works from any directory without installing the package.
 here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PYTHONPATH="$here/src${PYTHONPATH:+:$PYTHONPATH}" exec python3 -m modules_ctl "$@"

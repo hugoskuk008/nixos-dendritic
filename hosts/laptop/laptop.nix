@@ -21,9 +21,9 @@ in {
       autoupdates
       garbagecleaner
       sops
-#      gnome
+gnome
       nvim
-
+      modules-ctl
 #     steam
       dgpuService
  #     office
@@ -31,7 +31,7 @@ in {
       firefox
       ryzenadj
   #    brave-origin
-    hyprland
+   # hyprland
 #     niri
       Laptop
   ])
@@ -60,8 +60,8 @@ in {
     home-manager.users.${args.user} = {
       imports = [
       config.flake.modules.homeManager.nvim
-#      config.flake.modules.homeManager.gnome
-        config.flake.modules.homeManager.hyprland
+     config.flake.modules.homeManager.gnome
+ #       config.flake.modules.homeManager.hyprland
 #      config.flake.modules.homeManager.niri
       config.flake.modules.homeManager.theme-switch
       config.flake.modules.homeManager.theme-switch-gui
