@@ -8,7 +8,6 @@
       withUWSM = true;
     };
 
-    services.displayManager.ly.enable = true;
     services.blueman.enable = true;
 
     hardware.bluetooth = {
