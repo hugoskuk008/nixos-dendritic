@@ -13,11 +13,13 @@
       "modules-ctl",
       "nvim",
       "office",
+      "onePassword",
       "rdp",
       "security",
       "sops",
       "steam",
       "system",
+      "tailscale",
       "twingate",
       "vpn-gui"
     ],
@@ -27,12 +29,12 @@
       "brave-origin",
       "dgpuService",
       "garbagecleaner",
+      "gaze",
       "gnome",
       "niri",
       "qemu",
       "ryzenadj",
       "steamVanilla",
-      "tailscale",
       "tlp"
     ]
   },

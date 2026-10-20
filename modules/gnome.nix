@@ -6,7 +6,10 @@
      services.xserver.enable = true;
     services.desktopManager.gnome.enable = true;
     services.displayManager.gdm.enable = true;
-
+    services.gaze.gnome.enableForUsers = true;
+    services.gaze.gnome.gdmFaceLogin = true;
+    services.gaze.gnome.enable = true;
+    security.pam.services.gaze.simultaneous = true;
   };
 
   flake.modules.homeManager.gnome = {pkgs, ...}: {

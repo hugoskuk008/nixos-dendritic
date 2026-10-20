@@ -6,7 +6,9 @@
     hermes-agent.url = "github:NousResearch/hermes-agent";
     sls-steam.url = "github:AceSLS/SLSsteam";
     acella.url = "github:ciscosweater/enter-the-wired";
-  
+    gaze.url = "github:GunduLabs/gaze";
+    gaze.inputs.nixpkgs.follows = "nixpkgs";
+
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
 

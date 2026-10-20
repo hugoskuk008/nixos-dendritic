@@ -57,6 +57,26 @@
         "type": "github"
       }
     },
+    "gaze": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1792501230,
+        "narHash": "sha256-KQxdsrrDyp0J1k/nDRjsWkD7pB9qj3Vcvk3Norb3knM=",
+        "owner": "GunduLabs",
+        "repo": "gaze",
+        "rev": "050170d665a4a8da64e7b55ae25cbf4f2cbbee5a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "GunduLabs",
+        "repo": "gaze",
+        "type": "github"
+      }
+    },
     "hermes-agent": {
       "inputs": {
         "flake-parts": "flake-parts_2",
@@ -291,6 +311,7 @@
       "inputs": {
         "acella": "acella",
         "flake-parts": "flake-parts",
+        "gaze": "gaze",
         "hermes-agent": "hermes-agent",
         "home-manager": "home-manager_2",
         "import-tree": "import-tree",
