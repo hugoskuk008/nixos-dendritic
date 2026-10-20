@@ -47,7 +47,10 @@ local menu        = "hyprlauncher"
 --   hl.exec_cmd("nm-applet")
 --   hl.exec_cmd("waybar & hyprpaper & firefox")
 -- end)
-
+hl.on("hyprland.start", function () 
+   hl.exec_cmd("waypaper --restore")
+   hl.exec_cmd("waybar")
+ end)
 
 -------------------------------
 ---- ENVIRONMENT VARIABLES ----

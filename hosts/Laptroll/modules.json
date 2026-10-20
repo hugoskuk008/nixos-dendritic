@@ -9,7 +9,7 @@
       "gaze",
       "git",
       "gluetun",
-      "gnome",
+      "hyprland",
       "locale",
       "modules-ctl",
       "nvim",
@@ -28,7 +28,7 @@
       "autoupdates",
       "brave-origin",
       "garbagecleaner",
-      "hyprland",
+      "gnome",
       "niri",
       "qemu",
       "rdp",
@@ -40,7 +40,7 @@
   },
   "homeManager": {
     "enabled": [
-      "gnome",
+      "hyprland",
       "nvim",
       "theme-switch",
       "theme-switch-gui",
@@ -48,7 +48,7 @@
     ],
     "disabled": [
       "Slaghoken",
-      "hyprland",
+      "gnome",
       "niri"
     ]
   }
