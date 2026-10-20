@@ -5,6 +5,7 @@
       "ai",
       "bootloader",
       "firefox",
+      "flatpak",
       "git",
       "gluetun",
       "hyprland",
@@ -17,6 +18,7 @@
       "sops",
       "steam",
       "system",
+      "twingate",
       "vpn-gui"
     ],
     "disabled": [
@@ -31,8 +33,7 @@
       "ryzenadj",
       "steamVanilla",
       "tailscale",
-      "tlp",
-      "twingate"
+      "tlp"
     ]
   },
   "homeManager": {
