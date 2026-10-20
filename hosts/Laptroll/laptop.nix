@@ -17,7 +17,7 @@ in {
     ./specialisation.nix
     ./nh.nix
       
-{      boot.blacklistedKernelModules = [ "uvcvideo" ];
+{     # boot.blacklistedKernelModules = [ "uvcvideo" ];
 
       home-manager.extraSpecialArgs = args;
         nixpkgs.hostPlatform = "x86_64-linux";  

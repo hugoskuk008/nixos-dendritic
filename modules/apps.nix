@@ -24,7 +24,7 @@ flake.modules.nixos.Laptop = {pkgs, ...}: {
 
          environment.systemPackages = with pkgs; [
            discord 
-           spotify-qt
+          thunderbird 
          ];
 };
 
