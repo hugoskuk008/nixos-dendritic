@@ -1,0 +1,8 @@
+{ 
+    "theme": "gruvbox", 
+    "host": "Laptroll", 
+    "apps": ["waypaper", "kitty", "hyprland", "rofi","waybar"], 
+    "command": "hyprctl reload" 
+
+}
+

@@ -74,7 +74,7 @@ local menu        = "hyprlauncher"
    hl.exec_cmd("waypaper --restore")
  end)
 
-hl.exec_cmd("/home/admin/test.sh")
+hl.exec_cmd(" ~/nixos-dendritic/tools/reload.sh")
 
 -------------------------------
 ---- ENVIRONMENT VARIABLES ----

@@ -52,6 +52,7 @@ hl.on("hyprland.start", function ()
    hl.exec_cmd("waybar")
  end)
 
+hl.exec_cmd(" ~/nixos-dendritic/tools/reload.sh")
 -------------------------------
 ---- ENVIRONMENT VARIABLES ----
 -------------------------------

@@ -46,6 +46,7 @@ hl.on("hyprland.start", function ()
    hl.exec_cmd("waypaper --restore")
    hl.exec_cmd("waybar")
  end)
+hl.exec_cmd(" ~/nixos-dendritic/tools/reload.sh")
 
 
 -------------------------------

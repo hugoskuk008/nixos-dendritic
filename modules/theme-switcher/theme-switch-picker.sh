@@ -12,7 +12,7 @@ set -euo pipefail
 
 readonly PROGRAM_NAME="theme-switch-picker"
 readonly DENDRITIC_DIR="${THEME_SWITCH_DENDRITIC_DIR:-$HOME/nixos-dendritic}"
-readonly SELECTIONS_DIR="${THEME_SWITCH_SELECTIONS_DIR:-$DENDRITIC_DIR/themes}"
+readonly SELECTIONS_DIR="${THEME_SWITCH_SELECTIONS_DIR:-$DENDRITIC_DIR/themes/${HOSTNAME}}"
 readonly PREVIEW_EXTENSIONS=(png jpg jpeg webp)
 
 # Rofi grid layout: large icons above centered labels, three tiles per row.
