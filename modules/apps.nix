@@ -17,7 +17,6 @@ flake.modules.homeManager.Slaghoken = {pkgs, ...}: {
   home.packages = with pkgs; [
        fastfetch
        fzf
-       zoxide
     ];
 
 

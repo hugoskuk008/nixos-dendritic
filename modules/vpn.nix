@@ -42,7 +42,7 @@ flake.modules.nixos.gluetun = {config, pkgs,...}: {
       
       networking.nat = {
         enable = true;
-        externalInterface = "eno1"; # Replace with the host's uplink interface.
+        externalInterface = "wlp99s0"; # Replace with the host's uplink interface.
         internalIPs = [ "10.203.0.2" ];
     };
 

@@ -1,7 +1,9 @@
 {...}: {
 
-flake.modules.homeManager.zsh = {config, ...}:{
-
+flake.modules.homeManager.zsh = {config, pkgs, ...}:{
+       home.packages = with pkgs; [
+       zoxide
+];
 programs.zsh = {
   enable = true;
   enableCompletion = true;

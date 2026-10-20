@@ -26,7 +26,7 @@ in
         inputs.flake-parts.flakeModules.modules       
         inputs.home-manager.flakeModules.home-manager
         (inputs.import-tree ./modules)
-        ./hosts/laptop/laptop.nix
+        ./hosts/Laptroll/laptop.nix
         ./hosts/slaghoken/slaghoken.nix
       ];
     };
