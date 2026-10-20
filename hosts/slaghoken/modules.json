@@ -19,8 +19,6 @@
       "sops",
       "steam",
       "system",
-      "tailscale",
-      "twingate",
       "vpn-gui"
     ],
     "disabled": [
@@ -35,7 +33,9 @@
       "qemu",
       "ryzenadj",
       "steamVanilla",
-      "tlp"
+      "tailscale",
+      "tlp",
+      "twingate"
     ]
   },
   "homeManager": {

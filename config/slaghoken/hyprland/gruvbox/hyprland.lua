@@ -71,7 +71,7 @@ local menu        = "hyprlauncher"
 --
  hl.on("hyprland.start", function () 
    hl.exec_cmd("waybar")
-   hl.exec_cmd("waypaper -r")
+   hl.exec_cmd("waypaper --restore")
 
 
  end)
