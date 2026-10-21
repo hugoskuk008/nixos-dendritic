@@ -1,3 +1,9 @@
+<<<<<<< HEAD
 theme=gruvbox
 host=laptop
 switched=2026-10-20T21:04:38Z
+=======
+theme=nord
+host=slaghoken
+switched=2026-10-21T22:42:17Z
+>>>>>>> 3e463c2 (inget)
