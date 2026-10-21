@@ -3,8 +3,9 @@ let
   args = {
   configname = "laptop"; 
   user = "admin"; 
-  currentTheme = "gruvbox";};
-
+  currentTheme = "gruvbox";
+  internetInterface = "wlp99s0";
+  };
   mkHost = import ../mk-host.nix{inherit config inputs;};
 in {
   flake.nixosConfigurations.Laptroll = mkHost {

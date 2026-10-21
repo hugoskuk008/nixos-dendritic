@@ -21,7 +21,8 @@
       "steam",
       "system",
       "twingate",
-      "vpn-gui"
+      "vpn-gui",
+      "zsh"
     ],
     "disabled": [
       "Laptop",
@@ -42,6 +43,7 @@
   "homeManager": {
     "enabled": [
       "Slaghoken",
+      "cursor",
       "hyprland",
       "nvim",
       "theme-switch",

@@ -1,6 +1,6 @@
 {...}:{
 
-flake.modules.nixos.gluetun = {config, pkgs,...}: {
+flake.modules.nixos.gluetun = {config, pkgs,internetInterface,...}: {
  environment.systemPackages = [pkgs.iproute2];
      sops.secrets."airvpn/wg-privateKey"   = { mode = "0400"; };
      sops.secrets."airvpn/wg-presharedKey" = { mode = "0400"; };
@@ -42,7 +42,7 @@ flake.modules.nixos.gluetun = {config, pkgs,...}: {
       
       networking.nat = {
         enable = true;
-        externalInterface = "wlp99s0"; # Replace with the host's uplink interface.
+        externalInterface = "${internetInterface}"; # Replace with the host's uplink interface.
         internalIPs = [ "10.203.0.2" ];
     };
 

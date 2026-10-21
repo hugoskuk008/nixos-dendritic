@@ -1,10 +1,11 @@
-{ config, inputs, secrets,... }: 
+{ config, inputs, ...}: 
 let
   args = {
   configname = "slaghoken"; 
   user = "admin"; 
   sopsSshkey = "/home/admin/.ssh/slaghoken";
   currentTheme = "gruvbox";
+  internetInterface = "eno1";
   };
     mkHost = import ../mk-host.nix{inherit config inputs;};
 
@@ -13,7 +14,7 @@ in {
   name = "slaghoken";
   inherit (args) user;
   selection = ./modules.json;
-  specialArgs = { inherit args; inherit (args) configname user sopsSshkey; };
+  specialArgs = { inherit args; inherit (args) internetInterface configname user sopsSshkey; };
   extraModules = [
     ./hardware-configuration.nix
     ./common.nix
