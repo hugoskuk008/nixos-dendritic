@@ -1,5 +1,9 @@
 {...}: {
+flake.modules.nixos.zsh = {pkgs,...}:{
+  programs.zsh.enable = true;
+  environment.shells = [pkgs.zsh];
 
+  };
 flake.modules.homeManager.zsh = {config, pkgs, ...}:{
        home.packages = with pkgs; [
        zoxide
