@@ -1,0 +1,17 @@
+
+# theme-switch / theme-switch-picker
+#
+# Every switch rewrites a `.theme-switch-marker` in each theme directory so that
+# Home Manager notices the change and relinks on the next rebuild. The content
+# changes each time, so keep it out of normal `git status` noise.
+#
+# Nix flakes only see files git knows about, so a NEW theme directory's marker
+# must be registered once, even though it is ignored:
+#   git add -N -f config/<app>/<theme>/.theme-switch-marker
+config/**/.theme-switch-marker
+ 
+# Temporary file theme-switch stages before renaming it onto the marker;
+# only left behind if a switch is interrupted.
+config/**/.theme-switch-marker.theme-switch.*
+ 
+
