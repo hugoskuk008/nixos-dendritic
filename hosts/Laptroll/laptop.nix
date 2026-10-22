@@ -12,7 +12,7 @@ in {
   name = "Laptroll";
   inherit (args) user;
   selection = ./modules.json;
-  specialArgs = { inherit args; inherit (args) configname user ; };
+  specialArgs = { inherit args; inherit (args) internetInterface configname user ; };
   extraModules = [
     ./hardware-configuration.nix
     ./specialisation.nix

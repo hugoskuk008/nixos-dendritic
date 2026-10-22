@@ -17,11 +17,10 @@
       "nvim",
       "office",
       "onePassword",
-      "ryzenadj",
       "security",
       "sops",
-      "steam",
       "system",
+      "tailscale",
       "tlp",
       "vpn-gui",
       "zsh"
@@ -35,10 +34,12 @@
       "hyprland",
       "ly",
       "niri",
+      "openVpn",
       "qemu",
       "rdp",
+      "ryzenadj",
+      "steam",
       "steamVanilla",
-      "tailscale",
       "twingate"
     ]
   },
