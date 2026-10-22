@@ -19,7 +19,7 @@
       "sops",
       "steam",
       "system",
-      "twingate",
+      "tailscale",
       "vpn-gui",
       "zsh"
     ],
@@ -36,8 +36,8 @@
       "rdp",
       "ryzenadj",
       "steamVanilla",
-      "tailscale",
-      "tlp"
+      "tlp",
+      "twingate"
     ]
   },
   "homeManager": {
