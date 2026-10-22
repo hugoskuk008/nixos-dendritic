@@ -1,4 +1,4 @@
-{user, ...}: {
+{...}: {
 
 
 flake.modules.nixos.niri = {pkgs, config ,user,...}: {
@@ -25,7 +25,7 @@ environment.systemPackages = with pkgs; [ alacritty fuzzel swaylock mako swayidl
 
   };
 
-  flake.modules.homeManager.niri = {pkgs, ...}: 
+  flake.modules.homeManager.niri = {pkgs, currentTheme,...}: 
   {
       home.packages = with pkgs; [
   xwayland-satellite # xwayland supporti
@@ -37,6 +37,6 @@ environment.systemPackages = with pkgs; [ alacritty fuzzel swaylock mako swayidl
 
 
   xdg.configFile."niri".source = ../config/niri;
-  xdg.configFile."rofi".source = ../config/rofi;
+  xdg.configFile."rofi".source = ../config/rofi/${currentTheme};
   };
 }

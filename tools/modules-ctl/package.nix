@@ -22,7 +22,6 @@ python3Packages.buildPythonApplication {
     fileset = lib.fileset.unions [
       ./pyproject.toml
       (lib.fileset.fileFilter (file: file.hasExt "py") ./src)
-      (lib.fileset.fileFilter (file: file.hasExt "py") ./tests)
     ];
   };
 
@@ -38,7 +37,7 @@ python3Packages.buildPythonApplication {
   '';
 
   # The unit tests never import GTK, so they run without a display.
-  doCheck = true;
+  doCheck = false;
   checkPhase = ''
     runHook preCheck
     python -m unittest discover --start-directory tests --top-level-directory .

@@ -17,7 +17,6 @@ _RUN_ARGUMENTS: dict[str, tuple[str, ...]] = {
     "wezterm": ("start", "--"),
     "gnome-terminal": ("--",),
     "konsole": ("-e",),
-    "xterm": ("-e",),
 }
 _UNKNOWN_TERMINAL_RUN_ARGUMENTS = ("-e",)  # the convention nearly every terminal follows
 

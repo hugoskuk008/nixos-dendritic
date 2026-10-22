@@ -59,7 +59,7 @@ flake.modules.nixos.gluetun = {config, pkgs,internetInterface,...}: {
       backend = "podman";
       containers = {
         gluetun = {
-          image = "docker.io/qmcgaw/gluetun:latest";
+          image = "docker.io/qmcgaw/gluetun:v3.41";
           volumes = [
                "/run/secrets:/run/secrets:ro"
             ];
