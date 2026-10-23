@@ -10,23 +10,37 @@
       "security",
       "sops",
       "tailscale",
-      "vpn-gui",
       "zsh"
     ],
     "disabled": [
       "Laptop",
+      "Slaghoken",
+      "ai",
       "autoupdates",
+      "bootloader",
       "brave-origin",
       "dgpuService",
+      "firefox",
+      "flatpak",
       "garbagecleaner",
       "gaze",
+      "gdm",
+      "gluetun",
+      "hyprland",
+      "kdeConnect",
       "niri",
+      "office",
+      "onePassword",
+      "openVpn",
       "qemu",
       "rdp",
       "ryzenadj",
+      "steam",
       "steamVanilla",
+      "system",
       "tlp",
-      "twingate"
+      "twingate",
+      "vpn-gui"
     ]
   },
   "homeManager": {
@@ -37,7 +51,10 @@
       "zsh"
     ],
     "disabled": [
-      "niri"
+      "hyprland",
+      "niri",
+      "theme-switch",
+      "theme-switch-gui"
     ]
   }
 }
