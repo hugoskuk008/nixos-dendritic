@@ -1,0 +1,42 @@
+{
+  "nixos": {
+    "enabled": [
+      "git",
+      "locale",
+      "ly",
+      "modules-ctl",
+      "nvim",
+      "sops",
+      "tailscale",
+      "vpn-gui",
+      "zsh",
+      "gnome"
+    ],
+    "disabled": [
+      "Laptop",
+      "autoupdates",
+      "brave-origin",
+      "dgpuService",
+      "garbagecleaner",
+      "gaze",
+      "niri",
+      "qemu",
+      "rdp",
+      "ryzenadj",
+      "steamVanilla",
+      "tlp",
+      "twingate"
+    ]
+  },
+  "homeManager": {
+    "enabled": [
+      "cursor",
+      "nvim",
+      "zsh",
+      "gnome"
+    ],
+    "disabled": [
+      "niri"
+    ]
+  }
+}

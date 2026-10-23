@@ -4,13 +4,13 @@
 
   networking.hostName = "nas";
   networking.hostId = "251d2bb4";
-
+  boot.zfs.forceImportRoot = false;
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.kernelPackages = pkgs.linuxPackages_6_18;
-
-  boot.zfs.extraPools = [ "nas-array" ];
-
+  boot.initrd.supportedFilesystems = [ "zfs" ];
+  boot.kernelPackages = pkgs.linuxPackages_6_12;
+  boot.kernelModules = [ "zfs" ];
+  boot.zfs.extraPools = [ "nas-array" ];    
       services.zfs = {
         autoScrub = {
           enable = true;
@@ -25,16 +25,18 @@
     git
     neovim
     smartmontools
+      zfs
   ];
 
   services.openssh.enable = true;
 
   users.users.admin = {
     isNormalUser = true;
-    uid = 950;   # match TrueNAS UID
+    uid = 1000;   # match TrueNAS UID
     extraGroups = [ "wheel" ];
    # openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAA..." ];
   };
+nix.settings.experimental-features = ["nix-command" "flakes"];
 
   system.stateVersion = "26.05";   
   }

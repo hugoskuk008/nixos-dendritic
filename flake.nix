@@ -39,6 +39,7 @@
         (inputs.import-tree ./modules)
         ./hosts/Laptroll/laptop.nix
         ./hosts/slaghoken/slaghoken.nix
+        ./hosts/nas/nas.nix
       ];
     };
 }   
