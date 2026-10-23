@@ -1,8 +1,12 @@
 {
   inputs = {
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-26.05";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    
     flake-parts.url = "github:hercules-ci/flake-parts";
     import-tree.url = "github:vic/import-tree";
+
+
     
     hermes-agent.url = "github:NousResearch/hermes-agent";
     
