@@ -30,7 +30,6 @@
     kitty
 ];
 
-  services.openssh.enable = true;
 
   users.users.admin = {
     isNormalUser = true;

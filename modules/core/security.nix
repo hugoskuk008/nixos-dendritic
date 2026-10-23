@@ -1,6 +1,6 @@
 {...}:{
-flake.modules.nixos.security = {pkgs, ...}: {
-  
+flake.modules.nixos.security = {pkgs, user,...}: {
+    users.users.${user}.openssh.authorizedKeys.keys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKMsgfbJfwUBXpavrKYOe6ySt7PSuKQOjZbkcz1XbTTb"];
   services.openssh = {
   enable = true;
   openFirewall = true;

@@ -2,15 +2,16 @@
   "nixos": {
     "enabled": [
       "git",
+      "gnome",
       "locale",
       "ly",
       "modules-ctl",
       "nvim",
+      "security",
       "sops",
       "tailscale",
       "vpn-gui",
-      "zsh",
-      "gnome"
+      "zsh"
     ],
     "disabled": [
       "Laptop",
@@ -31,9 +32,9 @@
   "homeManager": {
     "enabled": [
       "cursor",
+      "gnome",
       "nvim",
-      "zsh",
-      "gnome"
+      "zsh"
     ],
     "disabled": [
       "niri"

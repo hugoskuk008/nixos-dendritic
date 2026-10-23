@@ -1,8 +1,8 @@
 {...}: {
-flake.modules.nixos.zsh = {pkgs,...}:{
+flake.modules.nixos.zsh = {pkgs,user,...}:{
   programs.zsh.enable = true;
   environment.shells = [pkgs.zsh];
-
+  users.users.${user}.shell = pkgs.zsh;
   };
 flake.modules.homeManager.zsh = {config, pkgs, ...}:{
        home.packages = with pkgs; [
@@ -23,7 +23,6 @@ programs.zsh = {
     size = 10000;
     path = "${config.xdg.dataHome}/zsh/history";
   };
-
   # Add raw commands that would normally go into .zshrc
   initExtra = ''
   
