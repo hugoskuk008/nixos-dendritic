@@ -26,7 +26,9 @@
     neovim
     smartmontools
       zfs
-  ];
+      sops
+    kitty
+];
 
   services.openssh.enable = true;
 
