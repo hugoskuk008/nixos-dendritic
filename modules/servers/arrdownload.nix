@@ -9,7 +9,7 @@
 
     appdata = "/docker";
 
-    webPorts = { qbittorrent = 8080; prowlarr = 9696; nzbget = 6789; };
+    webPorts = { qbittorrent = 8080; mousehole = 5010; prowlarr = 9696; nzbget = 6789; };
 
     netName   = "servarrnetwork";
     netSubnet = "172.39.0.0/24";
@@ -90,7 +90,7 @@
       };
 
       qbittorrent = {
-        image = "lscr.io/linuxserver/qbittorrent:latest";
+        image = "lscr.io/linuxserver/qbittorrent:5.2.4_v2.0.15-ls481";
         autoStart = true;
         dependsOn = [ "gluetun" ];
         environment = commonEnv // {
@@ -115,7 +115,19 @@
         ];
         extraOptions = gluetunNs;
       };
-
+      mousehole = {
+        image = "tmmrtn/mousehole:latest";
+        autoStart = true;
+        dependsOn =  ["gluetun"];
+        environment = {
+          TZ = "Europe/Stockholm";
+          MOUSEHOLE_AUTH_PASSWORD = "passw0rd";
+          MOUSEHOLE_ALLOWED_HOSTS = "mousehole.home.hogcloud.bid";
+          MOUSEHOLE_ALLOWED_ORIGINS = "https://mousehole.home.hogcloud.bid";
+        };
+        volumes = ["${appdata}/mousehole:/mousehole"];
+        extraOptions = gluetunNs;
+      };
       prowlarr = {
         image = "lscr.io/linuxserver/prowlarr:latest";
         autoStart = true;
