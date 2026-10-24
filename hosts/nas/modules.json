@@ -1,12 +1,16 @@
 {
   "nixos": {
     "enabled": [
+      "cockpit",
       "git",
       "gnome",
+      "homelab-dns",
+      "homelab-registry",
       "locale",
       "ly",
       "modules-ctl",
       "nvim",
+      "proxy",
       "security",
       "sops",
       "tailscale",

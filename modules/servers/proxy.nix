@@ -13,7 +13,10 @@ let
             name = if svc.perHost then "${name}-${hostName}" else name;
             inherit hostName;
             inherit (svc) port scheme;
-            address = sys.config.homelab.address;
+            address =
+              if sys.config.homelab.address == null
+              then throw "host '${hostName}' registers homelab services but has no homelab.address set"
+              else sys.config.homelab.address;
           })
           sys.config.homelab.services))
     flake.nixosConfigurations);
@@ -23,43 +26,93 @@ let
   published = lib.mapAttrs (_: rs: lib.head rs) byName;
 in
 {
-  flake.modules.nixos.proxy = { config, lib, ... }: {
-    assertions = [
-      {
-        assertion = duplicates == { };
-        message =
-          "Services registered on more than one host (disable them on all but one): "
-          + lib.concatStringsSep "; " (lib.mapAttrsToList
-            (name: rs: "${name} on ${lib.concatMapStringsSep ", " (r: r.hostName) rs}")
-            duplicates);
-      }
-    ];
-
-    services.nginx = {
-      enable = true;
-      recommendedProxySettings = true;
-      recommendedOptimisation = true;
-      recommendedGzipSettings = true;
-
-      virtualHosts = {
-        # Anything that doesn't match a published name.
-        "_" = {
-          default = true;
-          locations."/".return = "404";
+  flake.modules.nixos.proxy = { config, lib, ... }:
+    let
+      cfg = config.homelab.ingress;
+      domain = config.homelab.domain;
+      tls = cfg.acme.enable;
+      tlsHost = lib.optionalAttrs tls { useACMEHost = domain; forceSSL = true; };
+    in
+    {
+      options.homelab.ingress.acme = {
+        enable = lib.mkEnableOption "HTTPS with a wildcard certificate from Let's Encrypt (DNS-01)";
+        email = lib.mkOption {
+          type = lib.types.str;
+          description = "Contact address for Let's Encrypt.";
         };
-      } // lib.mapAttrs'
-        (name: s: lib.nameValuePair "${name}.${config.homelab.domain}" {
-          locations."/" = {
-            proxyPass = "${s.scheme}://${s.address}:${toString s.port}";
-            proxyWebsockets = true;
-            extraConfig = lib.optionalString (s.scheme == "https") ''
-              proxy_ssl_verify off;
-            '';
-          };
-        })
-        published;
-    };
+        dnsProvider = lib.mkOption {
+          type = lib.types.str;
+          default = "cloudflare";
+          description = "lego DNS provider code.";
+        };
+        credentialFiles = lib.mkOption {
+          type = lib.types.attrsOf lib.types.path;
+          default = { };
+          description = "lego credential variables (e.g. CLOUDFLARE_DNS_API_TOKEN_FILE) to file paths.";
+        };
+        staging = lib.mkEnableOption "the Let's Encrypt staging CA (use while testing; certs are untrusted)";
+      };
 
-    networking.firewall.allowedTCPPorts = [ 80 ];
-  };
+      config = lib.mkMerge [
+        {
+          assertions = [
+            {
+              assertion = duplicates == { };
+              message =
+                "Services registered on more than one host (disable them on all but one): "
+                + lib.concatStringsSep "; " (lib.mapAttrsToList
+                  (name: rs: "${name} on ${lib.concatMapStringsSep ", " (r: r.hostName) rs}")
+                  duplicates);
+            }
+          ];
+
+          services.nginx = {
+            enable = true;
+            recommendedProxySettings = true;
+            recommendedOptimisation = true;
+            recommendedGzipSettings = true;
+            recommendedTlsSettings = true;
+
+            virtualHosts = {
+              # Anything that doesn't match a published name.
+              "_" = {
+                default = true;
+                locations."/".return = "404";
+              } // tlsHost;
+            } // lib.mapAttrs'
+              (name: s: lib.nameValuePair "${name}.${domain}" ({
+                locations."/" = {
+                  proxyPass = "${s.scheme}://${s.address}:${toString s.port}";
+                  proxyWebsockets = true;
+                  extraConfig = lib.optionalString (s.scheme == "https") ''
+                    proxy_ssl_verify off;
+                  '';
+                };
+              } // tlsHost))
+              published;
+          };
+
+          networking.firewall.allowedTCPPorts = [ 80 53 ];
+        }
+
+        (lib.mkIf tls {
+          security.acme = {
+            acceptTerms = true;
+            defaults.email = cfg.acme.email;
+            certs.${domain} = {
+              domain = "*.${domain}";
+              dnsProvider = cfg.acme.dnsProvider;
+              credentialFiles = cfg.acme.credentialFiles;
+              # Don't resolve through our own dnsmasq, which answers for this domain.
+              dnsResolver = "1.1.1.1:53";
+              group = config.services.nginx.group;
+              server = lib.mkIf cfg.acme.staging
+                "https://acme-staging-v02.api.letsencrypt.org/directory";
+            };
+          };
+
+          networking.firewall.allowedTCPPorts = [ 443 ];
+        })
+      ];
+    };
 }

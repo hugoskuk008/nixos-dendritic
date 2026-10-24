@@ -11,11 +11,18 @@
       services.cockpit = {
         enable = true;
         inherit port;
-        openFirewall = true;           
+        openFirewall = true;
+
+        allowed-origins = [
+          "http://${fqdn}"
+          "ws://${fqdn}"
+          "https://${fqdn}"
+          "wss://${fqdn}"
+        ];
+
         settings.WebService = {
-          Origins = "http://${fqdn} ws://${fqdn} https://${fqdn} wss://${fqdn}";
           ProtocolHeader = "X-Forwarded-Proto";
-          AllowUnencrypted = true; 
+          AllowUnencrypted = true;
         };
       };
     };
