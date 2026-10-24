@@ -17,6 +17,7 @@
       "nvim",
       "office",
       "onePassword",
+      "ryzenadj",
       "security",
       "sops",
       "system",
@@ -37,7 +38,6 @@
       "openVpn",
       "qemu",
       "rdp",
-      "ryzenadj",
       "steam",
       "steamVanilla",
       "twingate"
