@@ -37,6 +37,25 @@ in
           credentialFiles.CLOUDFLARE_DNS_API_TOKEN_FILE =
             config.sops.secrets."acme/cloudflareToken".path;
         };
+        fileSystems."/docker" = {
+        device = "/nas-array/docker";
+        fsType = "none";
+        options = [
+         "bind"
+         "x-systemd.requires=zfs-mount.service"
+          "x-systemd.after=zfs-mount.service"
+         ];
+        };
+
+        fileSystems."/data" = {
+        fsType = "none";
+        device = "/nas-array/subvol-100-disk-0/";
+        options = [
+          "bind"
+          "x-systemd.requires=zfs-mount.service"
+          "x-systemd.after=zfs-mount.service"
+           ];
+         };
 
         home-manager.useGlobalPkgs               = true;
         home-manager.backupFileExtension         = null;

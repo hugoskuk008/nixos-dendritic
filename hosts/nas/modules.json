@@ -2,6 +2,7 @@
   "nixos": {
     "enabled": [
       "cockpit",
+      "docker",
       "git",
       "gnome",
       "homelab-dns",
@@ -12,6 +13,7 @@
       "nvim",
       "proxy",
       "security",
+      "server-download-stack",
       "sops",
       "tailscale",
       "zsh"
