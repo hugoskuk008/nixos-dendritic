@@ -13,7 +13,12 @@
       "nvim",
       "proxy",
       "security",
+      "server-bazarr",
       "server-download-stack",
+      "server-jellyfin",
+      "server-lazyLibrarian",
+      "server-radarr",
+      "server-sonarr",
       "sops",
       "tailscale",
       "zsh"

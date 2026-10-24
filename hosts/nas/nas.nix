@@ -27,7 +27,7 @@ in
         homelab.address = "192.168.10.10";      
         homelab.domain  = "home.hogcloud.bid";
 
-        services.tailscale.extraSetFlags = [ "--advertise-routes=192.168.10.10/24" ];
+        services.tailscale.extraSetFlags = [ "--advertise-routes=192.168.10.0/24" ];
 
         sops.secrets."acme/cloudflareToken" = { };
         homelab.ingress.acme = {

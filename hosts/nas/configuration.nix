@@ -19,7 +19,7 @@
         trim.enable = true;
       };
 
-
+nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
     htop
     git
@@ -29,7 +29,21 @@
       sops
     kitty
 ];
+ services.xserver.videoDrivers = ["nvidia"];
 
+  hardware.nvidia = {
+
+    # Modesetting is required.
+    modesetting.enable = true;
+
+
+
+    open = true;
+
+    nvidiaSettings = true;
+
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
+  };
 
   users.users.admin = {
     isNormalUser = true;
