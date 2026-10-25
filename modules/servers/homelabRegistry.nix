@@ -43,6 +43,17 @@
               '';
             };
 
+            auth = lib.mkOption {
+              type = lib.types.enum [ "none" "authentik" ];
+              default = "authentik";
+              description = ''
+                Browser access control for this published virtual host.
+                "authentik" means Nginx performs a forward-auth check; Docker
+                containers do not authenticate to Authentik. Internal APIs must
+                use a backend/network path that bypasses this browser ingress.
+              '';
+            };
+
             perHost = lib.mkOption {
               type = lib.types.bool;
               default = false;

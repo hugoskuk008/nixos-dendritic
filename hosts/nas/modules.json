@@ -1,6 +1,7 @@
 {
   "nixos": {
     "enabled": [
+      "authentik",
       "cockpit",
       "docker",
       "git",

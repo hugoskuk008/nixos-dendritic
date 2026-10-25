@@ -32,9 +32,7 @@ flake.modules.nixos.security = {pkgs, user,...}: {
     backend = "iptables";
     pingLimit = "--limit 1/minute --limit-burst 5";
     allowedTCPPorts = [
-       22
-       80
-       443
+       22 443
 
       ];
     allowedUDPPorts = [

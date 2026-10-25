@@ -14,10 +14,7 @@
         openFirewall = true;
 
         allowed-origins = [
-          "http://${fqdn}"
-          "ws://${fqdn}"
           "https://${fqdn}"
-          "wss://${fqdn}"
         ];
 
         settings.WebService = {
