@@ -22,10 +22,10 @@
       options = [ "fmask=0022" "dmask=0022" ];
     };
 
-  fileSystems."/mnt/Media" =
-    { device = "192.168.10.10:/mnt/nas-array/subvol-100-disk-0";
-      fsType = "nfs4";
-    };
+#  fileSystems."/mnt/Media" =
+#    { device = "192.168.10.10:/mnt/nas-array/subvol-100-disk-0";
+#      fsType = "nfs4";
+#    };
 
   swapDevices =
     [ { device = "/dev/disk/by-uuid/04fac782-ace1-494b-8bdb-2940e8697db4"; }
