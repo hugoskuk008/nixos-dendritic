@@ -6,7 +6,10 @@
       if config.homelab.address == null
       then throw "server-download-stack needs homelab.address set on this host"
       else config.homelab.address;
-
+       reach = [ "sonarr" "radarr" "seerr" ];
+    hostEntries = map
+      (n: "--add-host=${n}.${config.homelab.domain}:${config.homelab.ingressAddress}")
+      reach;
     appdata = "/docker";
 
     webPorts = { qbittorrent = 8080; mousehole = 5010; prowlarr = 9696; nzbget = 6789; };
@@ -16,7 +19,7 @@
     netUnit   = "docker-servarrnetwork";
     vpnPort   = "38940";
 
-    commonEnv = { PUID = "1000"; PGID = "1000"; TZ = "Etc/UTC"; };
+    commonEnv = { PUID = "1000"; PGID = "1000"; TZ = "Europe/Stockholm"; };
     gluetunNs = [ "--network=container:gluetun" ];
 
     privKey = config.sops.secrets."airvpn/wg-privateKey".path;
@@ -83,11 +86,12 @@
           WIREGUARD_ADDRESSES      = "10.174.25.121/32";
           SERVER_COUNTRIES         = "Netherlands";
           FIREWALL_VPN_INPUT_PORTS = vpnPort;
+          FIREWALL_OUTBOUND_SUBNETS = "192.168.10.0/24,172.39.0.0/24";
         };
         capabilities = { NET_ADMIN = true; };
         devices = [ "/dev/net/tun:/dev/net/tun" ];
-        extraOptions = [ "--network=${netName}" ];
-      };
+       extraOptions = [ "--network=${netName}" ] ++ hostEntries;     
+       };
 
       qbittorrent = {
         image = "lscr.io/linuxserver/qbittorrent:5.2.4_v2.0.15-ls481";

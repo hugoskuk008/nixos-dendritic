@@ -10,7 +10,7 @@
 
     webPorts = { radarr = 7878; };
 
-    commonEnv = { PUID = "1000"; PGID = "1000"; TZ = "Etc/UTC"; };
+    commonEnv = { PUID = "1000"; PGID = "1000"; TZ = "Europe/Stockholm"; };
   in
   {
     assertions = [{

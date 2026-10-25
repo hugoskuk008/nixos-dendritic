@@ -8,7 +8,7 @@ flake.modules.nixos.server-bazarr = { config, lib, pkgs, ...}:
    
    appdata = "/docker";
    webPorts = { bazarr = 6767; };
-   commonEnv = {PUID = "1000"; PGID = "1000"; TZ = "ETC/UTC";};
+   commonEnv = {PUID = "1000"; PGID = "1000"; TZ = "Europe/Stockholm";};
   in
    {
       assertions = [{

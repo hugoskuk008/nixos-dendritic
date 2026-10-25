@@ -18,6 +18,7 @@
       "server-jellyfin",
       "server-lazyLibrarian",
       "server-radarr",
+      "server-seerr",
       "server-sonarr",
       "sops",
       "tailscale",

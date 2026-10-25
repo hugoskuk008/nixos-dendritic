@@ -8,7 +8,7 @@ flake.modules.nixos.server-sonarr = { config, lib, pkgs, ...}:
    
    appdata = "/docker";
    webPorts = { sonarr = 8989; };
-   commonEnv = {PUID = "1000"; PGID = "1000"; TZ = "ETC/UTC";};
+   commonEnv = {PUID = "1000"; PGID = "1000"; TZ = "Europe/Stockholm";};
   in
    {
       assertions = [{

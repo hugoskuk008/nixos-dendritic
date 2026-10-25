@@ -12,7 +12,11 @@
         default = "hogcloud.local";
         description = "Base domain. Services are published as <name>.<domain>.";
       };
-
+      ingressAddress = lib.mkOption {
+        type = lib.types.nullOr lib.types.str;
+        default = null;
+        description = "LAN IP of the host running the ingress (where the wildcard DNS points).";
+      };
       address = lib.mkOption {
         type = lib.types.nullOr lib.types.str;
         default = null;

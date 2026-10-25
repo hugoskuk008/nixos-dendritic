@@ -7,6 +7,7 @@ let
     sopsSshkey       = "/home/admin/.ssh/slaghoken";
     currentTheme     = "gruvbox";
     internetInterface = "enp5s0";
+    ipadress = "192.168.10.10";
   };
   mkHost = import ../mk-host.nix { inherit inputs config; };
 in
@@ -26,7 +27,7 @@ in
       ({ config, ... }: {
         homelab.address = "192.168.10.10";      
         homelab.domain  = "home.hogcloud.bid";
-
+        homelab.ingressAddress = "192.168.10.10";
         services.tailscale.extraSetFlags = [ "--advertise-routes=192.168.10.0/24" ];
 
         sops.secrets."acme/cloudflareToken" = { };
