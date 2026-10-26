@@ -38,12 +38,6 @@
     sops.secrets."airvpn/wg-privateKey"   = { mode = "0400"; };
     sops.secrets."airvpn/wg-presharedKey" = { mode = "0400"; };
 
-    systemd.tmpfiles.rules = [
-      "d ${appdata}/gluetun     0750 root root - -"
-      "d ${appdata}/qbittorrent 0750 root root - -"
-      "d ${appdata}/nzbget      0750 root root - -"
-      "d ${appdata}/prowlarr    0750 root root - -"
-    ];
 
     # ---- shared network ----
     systemd.services.${netUnit} = {

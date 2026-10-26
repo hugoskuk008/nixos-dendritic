@@ -30,7 +30,6 @@ in
         homelab.ingressAddress = "192.168.10.10";
         # WebUI login gate; only Bazarr is protected in the initial canary rollout.
         homelab.ingress.authentik.enable = true;
-        homelab.services.bazarr.auth = "authentik";
         services.tailscale.extraSetFlags = [ "--advertise-routes=192.168.10.0/24" ];
 
         sops.secrets."acme/cloudflareToken" = { };
@@ -50,7 +49,16 @@ in
           "x-systemd.after=zfs-mount.service"
          ];
         };
-
+        
+fileSystems."/nextcloud" = {
+  device = "/nas-array/nextcloud";
+  fsType = "none";
+  options = [
+    "bind"
+    "x-systemd.requires=zfs-mount.service"
+    "x-systemd.after=zfs-mount.service"
+  ];
+};
         fileSystems."/data" = {
         fsType = "none";
         device = "/nas-array/subvol-100-disk-0/";

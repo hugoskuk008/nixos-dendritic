@@ -37,12 +37,6 @@
      };
       virtualisation.oci-containers.backend = "docker";
 
-      systemd.tmpfiles.rules = [
-        "d /docker/authentik 0750 root root - -"
-        "d /docker/authentik/postgres 0750 root root - -"
-        "d /docker/authentik/media 0750 root root - -"
-        "d /docker/authentik/custom-templates 0750 root root - -"
-      ];
 
       # Create an isolated Docker network for Authentik and its database.
       systemd.services.docker-authentik-network = {

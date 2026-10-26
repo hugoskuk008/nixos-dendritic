@@ -45,7 +45,7 @@
 
             auth = lib.mkOption {
               type = lib.types.enum [ "none" "authentik" ];
-              default = "authentik";
+              default = "none";
               description = ''
                 Browser access control for this published virtual host.
                 "authentik" means Nginx performs a forward-auth check; Docker
