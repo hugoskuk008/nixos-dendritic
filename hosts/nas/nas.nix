@@ -67,7 +67,13 @@ fileSystems."/nextcloud" = {
           "x-systemd.after=zfs-mount.service"
            ];
          };
-
+homelab.ingress.public = {
+  enable = true;
+  domain = "hogcloud.bid";
+  listenAddress = "10.77.0.2";
+  listenPort = 8443;
+  wireguardInterface = "wg-oracle";
+};
         home-manager.useGlobalPkgs               = true;
         home-manager.backupFileExtension         = null;
         home-manager.extraSpecialArgs            = args;

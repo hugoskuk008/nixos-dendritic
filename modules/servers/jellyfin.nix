@@ -20,6 +20,7 @@ flake.modules.nixos.server-jellyfin = { config, lib, ... }:
     homelab.services = lib.mapAttrs (_: port: {
     inherit port;
     auth = "none";
+    public.enable = true;
     }) webPorts; 
     virtualisation.oci-containers.containers.jellyfin = {
       image = "jellyfin/jellyfin:latest";

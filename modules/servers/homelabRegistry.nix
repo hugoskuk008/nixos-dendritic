@@ -23,8 +23,7 @@
         example = "192.168.1.10";
         description = "This host's LAN IP, which the ingress uses to reach its services.";
       };
-
-      services = lib.mkOption {
+           services = lib.mkOption {
         default = { };
         description = "HTTP(S) services on this host that the ingress should publish.";
         type = lib.types.attrsOf (lib.types.submodule {
@@ -33,7 +32,8 @@
               type = lib.types.port;
               description = "Port on this host's address that serves the service.";
             };
-
+public.enable = lib.mkEnableOption
+  "publishing this application through the dedicated public ingress";
             scheme = lib.mkOption {
               type = lib.types.enum [ "http" "https" ];
               default = "http";
