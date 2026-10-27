@@ -45,7 +45,7 @@
         # GPU (amdgpu display power saving, 0-4)
         AMDGPU_ABM_LEVEL_ON_AC = 0;
         AMDGPU_ABM_LEVEL_ON_BAT = 1;
-        AMDGPU_ABM_LEVEL_ON_SAV = 3;
+        AMDGPU_ABM_LEVEL_ON_SAV = 4;
 
         # PCIe / runtime PM
         PCIE_ASPM_ON_AC = "default";
