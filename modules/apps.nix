@@ -6,6 +6,7 @@ flake.modules.nixos.Slaghoken = {pkgs, ...}: {
     heroic
     prismlauncher
     sops
+    wl-clipboard
 ];
 programs.java = {enable = true; package = pkgs.jdk21;};
   };

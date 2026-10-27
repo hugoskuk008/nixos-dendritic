@@ -53,7 +53,6 @@ in
             proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
             proxy_set_header X-Real-IP $remote_addr;
             proxy_set_header Cookie $http_cookie;
-            # Reject client-controlled original-URI override (Auth source advisory).
             proxy_set_header X-Original-URI "";
           '';
         };
@@ -80,8 +79,6 @@ in
                   error_page 401 = @authentik_signin;
                   auth_request_set $authentik_cookie $upstream_http_set_cookie;
                   add_header Set-Cookie $authentik_cookie always;
-                  # We use Authentik as a gate, NOT header-based login at the backend.
-                  # Never forward client-forged identity headers to the application.
                   proxy_set_header X-Authentik-Username "";
                   proxy_set_header X-Authentik-Groups "";
                   proxy_set_header X-Authentik-Email "";
@@ -90,7 +87,6 @@ in
                   proxy_set_header X-Authentik-Entitlements "";
                 '')
                 + (lib.optionalString (svc.scheme == "https") ''
-                  # Existing behaviour; migrate upstreams to verified certificates.
                   proxy_ssl_verify off;
                 '');
             };

@@ -24,7 +24,7 @@ programs.zsh = {
     path = "${config.xdg.dataHome}/zsh/history";
   };
   # Add raw commands that would normally go into .zshrc
-  initExtra = ''
+  initContent = ''
   
   eval "$(zoxide init zsh)"
   '';
