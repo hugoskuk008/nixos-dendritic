@@ -13,7 +13,8 @@ let
             name = if svc.perHost then "${name}-${hostName}" else name;
             inherit hostName;
             inherit (svc) port scheme auth;
-            address =
+            authBypassLocations = svc.authBypassLocations or [ ];
+           address =
               if sys.config.homelab.address == null
               then throw "host '${hostName}' registers homelab services but has no homelab.address set"
               else sys.config.homelab.address;
@@ -66,32 +67,63 @@ in
         };
       };
 
-      mkPublishedVhost = name: svc:
-        let requiresAuth = svc.auth == "authentik";
-        in {
-          locations = {
-            "/" = {
-              proxyPass = "${svc.scheme}://${svc.address}:${toString svc.port}";
-              proxyWebsockets = true;
-              extraConfig =
-                (lib.optionalString requiresAuth ''
-                  auth_request /_authentik_check;
-                  error_page 401 = @authentik_signin;
-                  auth_request_set $authentik_cookie $upstream_http_set_cookie;
-                  add_header Set-Cookie $authentik_cookie always;
-                  proxy_set_header X-Authentik-Username "";
-                  proxy_set_header X-Authentik-Groups "";
-                  proxy_set_header X-Authentik-Email "";
-                  proxy_set_header X-Authentik-Name "";
-                  proxy_set_header X-Authentik-Uid "";
-                  proxy_set_header X-Authentik-Entitlements "";
-                '')
-                + (lib.optionalString (svc.scheme == "https") ''
-                  proxy_ssl_verify off;
-                '');
-            };
-          } // lib.optionalAttrs requiresAuth authentikLocations;
-        } // tlsHost;
+mkPublishedVhost = name: svc:
+  let
+    requiresAuth = svc.auth == "authentik";
+
+    backend =
+      "${svc.scheme}://${svc.address}:${toString svc.port}";
+
+    # Prevent clients from spoofing Authentik identity headers.
+    # Authorization is preserved for application API credentials.
+    stripAuthentikHeaders = ''
+      proxy_set_header X-Authentik-Username "";
+      proxy_set_header X-Authentik-Groups "";
+      proxy_set_header X-Authentik-Email "";
+      proxy_set_header X-Authentik-Name "";
+      proxy_set_header X-Authentik-Uid "";
+      proxy_set_header X-Authentik-Entitlements "";
+    '';
+
+    upstreamTls = lib.optionalString (svc.scheme == "https") ''
+      proxy_ssl_verify off;
+    '';
+
+    # Endpoints with their own application-level authentication.
+    # These locations do not perform Authentik forward auth.
+    bypassLocations =
+      lib.genAttrs svc.authBypassLocations (_: {
+        proxyPass = backend;
+        proxyWebsockets = true;
+
+        extraConfig =
+          stripAuthentikHeaders
+          + upstreamTls;
+      });
+
+  in
+  {
+    locations = {
+      "/" = {
+        proxyPass = backend;
+        proxyWebsockets = true;
+
+        extraConfig =
+          (lib.optionalString requiresAuth ''
+            auth_request /_authentik_check;
+            error_page 401 = @authentik_signin;
+            auth_request_set $authentik_cookie $upstream_http_set_cookie;
+            add_header Set-Cookie $authentik_cookie always;
+          ''
+          + stripAuthentikHeaders)
+          + upstreamTls;
+      };
+    }
+    // lib.optionalAttrs requiresAuth (
+      bypassLocations // authentikLocations
+    );
+  }
+  // tlsHost;
     in
     {
       options.homelab.ingress = {

@@ -17,9 +17,10 @@ flake.modules.nixos.server-jellyfin = { config, lib, ... }:
 
     virtualisation.oci-containers.backend = "docker";
 
-    homelab.services =
-      lib.mapAttrs (_: port: { inherit port; }) webPorts;
-
+    homelab.services = lib.mapAttrs (_: port: {
+    inherit port;
+    auth = "none";
+    }) webPorts; 
     virtualisation.oci-containers.containers.jellyfin = {
       image = "jellyfin/jellyfin:latest";
       autoStart = true;

@@ -37,8 +37,6 @@
         };
 
         networking.firewall.interfaces.${internetInterface} = {
-          allowedUDPPorts = [ 53 ];
-          allowedTCPPorts = [ 53 ];
         };
       };
     };

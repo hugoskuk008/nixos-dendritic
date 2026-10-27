@@ -17,8 +17,14 @@ flake.modules.nixos.server-bazarr = { config, lib, pkgs, ...}:
         }];
       virtualisation.oci-containers.backend = "docker";
 
-      homelab.services = lib.mapAttrs (_ : port: {inherit port;})webPorts;
-  
+  homelab.services = lib.mapAttrs (_: port: {
+  inherit port;
+
+  authBypassLocations = [
+    "^~ /api/"
+  ];
+}) webPorts;
+
       virtualisation.oci-containers.containers.bazarr = {
         image = "lscr.io/linuxserver/bazarr:latest";
         autoStart = true;

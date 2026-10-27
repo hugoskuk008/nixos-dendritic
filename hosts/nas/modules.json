@@ -15,6 +15,7 @@
       "proxy",
       "security",
       "server-audiobookshelf",
+      "server-backend-isolation",
       "server-bazarr",
       "server-download-stack",
       "server-jellyfin",

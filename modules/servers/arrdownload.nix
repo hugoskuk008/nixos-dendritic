@@ -32,8 +32,30 @@
     }];
     virtualisation.oci-containers.backend = "docker";
     # ---- publish the WebUIs through the ingress ----
-    homelab.services = lib.mapAttrs (_: port: { inherit port; }) webPorts;
-    # ---- secrets ----
+homelab.services = lib.mapAttrs (name: port: {
+  inherit port;
+
+  authBypassLocations =
+    if name == "prowlarr" then [
+      # Prowlarr management API
+      "^~ /api/v1/"
+
+      # Torznab/Newznab indexer feeds and downloads
+      "~ ^/[0-9]+/(api|download)/?$"
+    ]
+    else if name == "qbittorrent" then [
+      # qBittorrent Web API, including login
+      "^~ /api/v2/"
+    ]
+    else if name == "nzbget" then [
+      # NZBGet RPC interfaces
+      "= /jsonrpc"
+      "= /xmlrpc"
+      "= /jsonprp"
+    ]
+    else [ ];
+}) webPorts;
+# ---- secrets ----
     sops.secrets."airvpn/wg-privateKey"   = { mode = "0400"; };
     sops.secrets."airvpn/wg-presharedKey" = { mode = "0400"; };
 

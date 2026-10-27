@@ -19,8 +19,13 @@
     }];
     virtualisation.oci-containers.backend = "docker";
 
-    homelab.services = lib.mapAttrs (_: port: { inherit port; }) webPorts;
+homelab.services = lib.mapAttrs (_: port: {
+  inherit port;
 
+  authBypassLocations = [
+    "^~ /api/v3/"
+  ];
+}) webPorts;
 
     virtualisation.oci-containers.containers.radarr = {
       image = "lscr.io/linuxserver/radarr:latest";

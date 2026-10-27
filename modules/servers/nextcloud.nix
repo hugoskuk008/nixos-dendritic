@@ -31,11 +31,22 @@
       virtualisation.oci-containers.backend = "docker";
 
       homelab.services.nextcloud = {
-        inherit port;
-        auth = "authentik";
-      };
+  inherit port;
+  auth = "authentik";
 
-      services.nginx.virtualHosts.${domain} = {
+  authBypassLocations = [
+    # WebDAV (files, calendars, contacts)
+    "~ ^/remote[.]php/(dav|webdav)(/|$)"
+
+
+    # Native application login flow v2
+    "= /index.php/login/v2"
+    "= /login/v2"
+    "= /login/v2/poll"
+
+  ];
+};
+  services.nginx.virtualHosts.${domain} = {
         extraConfig = ''
           client_max_body_size 10G;
         '';

@@ -45,7 +45,7 @@
 
             auth = lib.mkOption {
               type = lib.types.enum [ "none" "authentik" ];
-              default = "none";
+              default = "authentik";
               description = ''
                 Browser access control for this published virtual host.
                 "authentik" means Nginx performs a forward-auth check; Docker
@@ -53,6 +53,23 @@
                 use a backend/network path that bypasses this browser ingress.
               '';
             };
+           authBypassLocations = lib.mkOption {
+            type = lib.types.listOf lib.types.str;
+              default = [ ];
+
+              example = [
+                 "~ ^/remote[.]php/(dav|webdav)(/|$)"
+               ];
+
+              description = ''
+              Nginx location selectors that bypass Authentik's
+              forward-auth check while still proxying to the
+              same backend.
+
+               These endpoints MUST require their own
+               authentication at the application layer.
+               '';
+           };
 
             perHost = lib.mkOption {
               type = lib.types.bool;

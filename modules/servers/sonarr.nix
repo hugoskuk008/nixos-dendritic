@@ -17,8 +17,15 @@ flake.modules.nixos.server-sonarr = { config, lib, pkgs, ...}:
         }];
       virtualisation.oci-containers.backend = "docker";
 
-      homelab.services = lib.mapAttrs (_ : port: {inherit port;})webPorts;
-  
+  homelab.services = lib.mapAttrs (_: port: {
+  inherit port;
+
+  authBypassLocations = [
+    "^~ /api/v3/"
+    "^~ /api/v5/"
+  ];
+}) webPorts;
+
       virtualisation.oci-containers.containers.sonarr = {
         image = "lscr.io/linuxserver/sonarr:latest";
         autoStart = true;

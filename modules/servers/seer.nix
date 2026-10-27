@@ -19,8 +19,13 @@
     }];
     virtualisation.oci-containers.backend = "docker";
 
-    homelab.services = lib.mapAttrs (_: port: { inherit port; }) webPorts;
+homelab.services = lib.mapAttrs (_: port: {
+  inherit port;
 
+  authBypassLocations = [
+    "^~ /api/v1/"
+  ];
+}) webPorts;
 
     virtualisation.oci-containers.containers.seer = {
       image = "ghcr.io/seerr-team/seerr:latest";
