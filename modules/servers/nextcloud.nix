@@ -20,10 +20,6 @@
         "${root}/data:/var/www/html/data"
       ];
 
-      networkDependency = {
-        requires = [ "docker-nextcloud-network.service" ];
-        after = [ "docker-nextcloud-network.service" ];
-      };
     in
     {
       assertions = [
@@ -32,7 +28,6 @@
           message = "server-nextcloud needs Docker enabled.";
         }
       ];
-
       virtualisation.oci-containers.backend = "docker";
 
       homelab.services.nextcloud = {
@@ -68,7 +63,6 @@
           "docker-nextcloud-db.service"
           "docker-nextcloud-redis.service"
           "docker-nextcloud.service"
-          "docker-nextcloud-cron.service"
         ];
 
         path = [ pkgs.docker ];
@@ -159,19 +153,7 @@
           extraOptions = [ "--network=${network}" ];
         };
 
-        nextcloud-cron = {
-          inherit image;
-          autoStart = true;
 
-          cmd = [ "cron" ];
-
-          dependsOn = [ "nextcloud" ];
-          environmentFiles = [ envFile ];
-
-          volumes = storage;
-
-          extraOptions = [ "--network=${network}" ];
-        };
       };
 
 systemd.services = {
@@ -190,10 +172,7 @@ systemd.services = {
     after = [ "nextcloud.mount" ];
   };
 
-  docker-nextcloud-cron = {
-    requires = [ "nextcloud.mount" ];
-    after = [ "nextcloud.mount" ];
-  };
+
 };
     };
 }

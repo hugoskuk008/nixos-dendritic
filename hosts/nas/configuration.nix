@@ -28,6 +28,9 @@ nixpkgs.config.allowUnfree = true;
       zfs
       sops
     kitty
+    btop
+    wl-clipboard
+    lemonade
 ];
  services.xserver.videoDrivers = ["nvidia"];
 

@@ -21,9 +21,6 @@
 
     homelab.services = lib.mapAttrs (_: port: { inherit port; }) webPorts;
 
-    systemd.tmpfiles.rules = [
-      "d ${appdata}/radarr 0750 root root - -"
-    ];
 
     virtualisation.oci-containers.containers.radarr = {
       image = "lscr.io/linuxserver/radarr:latest";

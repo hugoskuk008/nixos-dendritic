@@ -28,7 +28,6 @@ in
         homelab.address = "192.168.10.10";      
         homelab.domain  = "home.hogcloud.bid";
         homelab.ingressAddress = "192.168.10.10";
-        # WebUI login gate; only Bazarr is protected in the initial canary rollout.
         homelab.ingress.authentik.enable = true;
         services.tailscale.extraSetFlags = [ "--advertise-routes=192.168.10.0/24" ];
 

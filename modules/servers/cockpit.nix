@@ -6,7 +6,7 @@
       fqdn = "cockpit-${config.networking.hostName}.${config.homelab.domain}";
     in
     {
-      homelab.services.cockpit = { inherit port; perHost = true; };
+      homelab.services.cockpit = { inherit port; perHost = true; auth="authentik"; };
 
       services.cockpit = {
         enable = true;

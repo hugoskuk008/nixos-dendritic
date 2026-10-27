@@ -33,7 +33,6 @@
     virtualisation.oci-containers.backend = "docker";
     # ---- publish the WebUIs through the ingress ----
     homelab.services = lib.mapAttrs (_: port: { inherit port; }) webPorts;
-
     # ---- secrets ----
     sops.secrets."airvpn/wg-privateKey"   = { mode = "0400"; };
     sops.secrets."airvpn/wg-presharedKey" = { mode = "0400"; };

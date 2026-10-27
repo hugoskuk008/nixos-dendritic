@@ -14,6 +14,7 @@
       "nvim",
       "proxy",
       "security",
+      "server-audiobookshelf",
       "server-bazarr",
       "server-download-stack",
       "server-jellyfin",
