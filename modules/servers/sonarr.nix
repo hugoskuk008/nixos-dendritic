@@ -1,43 +1,40 @@
+{ ... }:
+let
+  mkServerContainer = import ./_lib/mk-server-container.nix;
+in
 {
-flake.modules.nixos.server-sonarr = { config, lib, pkgs, ...}:
-  let
-   addr= 
-    if config.homelab.address == null
-    then throw "server-sonarr needs homelab.adress set on this host"
-    else config.homelab.address;
-   
-   appdata = "/docker";
-   webPorts = { sonarr = 8989; };
-   commonEnv = {PUID = "1000"; PGID = "1000"; TZ = "Europe/Stockholm";};
-  in
-   {
-      assertions = [{
-        assertion = config.virtualisation.docker.enable;
-        message = "server-sonarr needs the docker module enabled on this host.";
-        }];
-      virtualisation.oci-containers.backend = "docker";
+  flake.modules.nixos.server-sonarr = { ... }:
+    let
+      port = 8989;
+    in
+    {
+      homelab.services.sonarr = {
+        inherit port;
+        authBypassLocations = [
+          "^~ /api/v3/"
+          "^~ /api/v5/"
+        ];
+      };
 
-  homelab.services = lib.mapAttrs (_: port: {
-  inherit port;
-
-  authBypassLocations = [
-    "^~ /api/v3/"
-    "^~ /api/v5/"
-  ];
-}) webPorts;
-
-      virtualisation.oci-containers.containers.sonarr = {
-        image = "lscr.io/linuxserver/sonarr:latest";
-        autoStart = true;
-        ports = lib.mapAttrsToList
-          (_:p: "${addr}:${toString p}:${toString p}")
-          webPorts;
-        environment = commonEnv;
-        volumes = [
-          "${appdata}/sonarr:/config"
-          "/data:/data"
+      imports = [
+        (mkServerContainer {
+          name = "sonarr";
+          image = "lscr.io/linuxserver/sonarr:latest";
+          inherit port;
+          dockerAssertionMessage = "server-sonarr needs the docker module enabled on this host.";
+          missingAddressMessage = "server-sonarr needs homelab.adress set on this host";
+          oci = {
+            environment = {
+              PUID = "1000";
+              PGID = "1000";
+              TZ = "Europe/Stockholm";
+            };
+            volumes = [
+              "/docker/sonarr:/config"
+              "/data:/data"
+            ];
+          };
+        })
       ];
     };
-  };
 }
-

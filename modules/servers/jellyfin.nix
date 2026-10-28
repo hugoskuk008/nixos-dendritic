@@ -1,45 +1,42 @@
-{...}:{
-flake.modules.nixos.server-jellyfin = { config, lib, ... }:
-  let
-    addr =
-      if config.homelab.address == null
-      then throw "server-jellyfin needs homelab.address set on this host"
-      else config.homelab.address;
+{ ... }:
+let
+  mkServerContainer = import ./_lib/mk-server-container.nix;
+in
+{
+  flake.modules.nixos.server-jellyfin = { ... }:
+    let
+      port = 8096;
+    in
+    {
+      homelab.services.jellyfin = {
+        inherit port;
+        auth = "none";
+        public.enable = true;
+      };
 
-    appdata = "/docker/jellyfin";
-    webPorts = { jellyfin = 8096; };
-  in
-  {
-    assertions = [{
-      assertion = config.virtualisation.docker.enable;
-      message = "server-jellyfin needs the Docker module enabled on this host.";
-    }];
-
-    virtualisation.oci-containers.backend = "docker";
-
-    homelab.services = lib.mapAttrs (_: port: {
-    inherit port;
-    auth = "none";
-    public.enable = true;
-    }) webPorts; 
-    virtualisation.oci-containers.containers.jellyfin = {
-      image = "jellyfin/jellyfin:latest";
-      autoStart = true;
-      user = "1000:1000";
-
-      ports = lib.mapAttrsToList
-        (_: port: "${addr}:${toString port}:${toString port}/tcp")
-        webPorts
-        ++ [ "7359:7359/udp" ];
-
-      volumes = [
-        "${appdata}/config:/config"
-        "${appdata}/cache:/cache"
-        "/data/Media/:/media:ro"
+      imports = [
+        (mkServerContainer {
+          name = "jellyfin";
+          image = "jellyfin/jellyfin:latest";
+          inherit port;
+          portSuffix = "/tcp";
+          dockerAssertionMessage = "server-jellyfin needs the Docker module enabled on this host.";
+          missingAddressMessage = "server-jellyfin needs homelab.address set on this host";
+          oci = {
+            user = "1000:1000";
+            volumes = [
+              "/docker/jellyfin/config:/config"
+              "/docker/jellyfin/cache:/cache"
+              "/data/Media/:/media:ro"
+            ];
+            ports = [
+              "7359:7359/udp"
+            ];
+            extraOptions = [
+              "--device=nvidia.com/gpu=all"
+            ];
+          };
+        })
       ];
-
-      # Requires Docker's NVIDIA GPU support to be configured on the host.
-      extraOptions = [ "--device=nvidia.com/gpu=all" ];
     };
-  };
 }

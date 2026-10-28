@@ -1,42 +1,39 @@
+{ ... }:
+let
+  mkServerContainer = import ./_lib/mk-server-container.nix;
+in
 {
-flake.modules.nixos.server-bazarr = { config, lib, pkgs, ...}:
-  let
-   addr= 
-    if config.homelab.address == null
-    then throw "server-bazarr needs homelab.adress set on this host"
-    else config.homelab.address;
-   
-   appdata = "/docker";
-   webPorts = { bazarr = 6767; };
-   commonEnv = {PUID = "1000"; PGID = "1000"; TZ = "Europe/Stockholm";};
-  in
-   {
-      assertions = [{
-        assertion = config.virtualisation.docker.enable;
-        message = "server-bazarr needs the docker module enabled on this host.";
-        }];
-      virtualisation.oci-containers.backend = "docker";
+  flake.modules.nixos.server-bazarr = { ... }:
+    let
+      port = 6767;
+    in
+    {
+      homelab.services.bazarr = {
+        inherit port;
+        authBypassLocations = [
+          "^~ /api/"
+        ];
+      };
 
-  homelab.services = lib.mapAttrs (_: port: {
-  inherit port;
-
-  authBypassLocations = [
-    "^~ /api/"
-  ];
-}) webPorts;
-
-      virtualisation.oci-containers.containers.bazarr = {
-        image = "lscr.io/linuxserver/bazarr:latest";
-        autoStart = true;
-        ports = lib.mapAttrsToList
-          (_:p: "${addr}:${toString p}:${toString p}")
-          webPorts;
-        environment = commonEnv;
-        volumes = [
-          "${appdata}/bazarr:/config"
-          "/data:/data"
+      imports = [
+        (mkServerContainer {
+          name = "bazarr";
+          image = "lscr.io/linuxserver/bazarr:latest";
+          inherit port;
+          dockerAssertionMessage = "server-bazarr needs the docker module enabled on this host.";
+          missingAddressMessage = "server-bazarr needs homelab.adress set on this host";
+          oci = {
+            environment = {
+              PUID = "1000";
+              PGID = "1000";
+              TZ = "Europe/Stockholm";
+            };
+            volumes = [
+              "/docker/bazarr:/config"
+              "/data:/data"
+            ];
+          };
+        })
       ];
     };
-  };
 }
-

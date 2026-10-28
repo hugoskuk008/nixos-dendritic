@@ -1,43 +1,39 @@
+{ ... }:
+let
+  mkServerContainer = import ./_lib/mk-server-container.nix;
+in
 {
-  flake.modules.nixos.server-radarr = { config, lib, pkgs, ... }:
-  let
-    addr =
-      if config.homelab.address == null
-      then throw "server-radarr needs homelab.address set on this host"
-      else config.homelab.address;
+  flake.modules.nixos.server-radarr = { ... }:
+    let
+      port = 7878;
+    in
+    {
+      homelab.services.radarr = {
+        inherit port;
+        authBypassLocations = [
+          "^~ /api/v3/"
+        ];
+      };
 
-    appdata = "/docker";
-
-    webPorts = { radarr = 7878; };
-
-    commonEnv = { PUID = "1000"; PGID = "1000"; TZ = "Europe/Stockholm"; };
-  in
-  {
-    assertions = [{
-      assertion = config.virtualisation.docker.enable;
-      message = "server-radarr needs the docker module enabled on this host.";
-    }];
-    virtualisation.oci-containers.backend = "docker";
-
-homelab.services = lib.mapAttrs (_: port: {
-  inherit port;
-
-  authBypassLocations = [
-    "^~ /api/v3/"
-  ];
-}) webPorts;
-
-    virtualisation.oci-containers.containers.radarr = {
-      image = "lscr.io/linuxserver/radarr:latest";
-      autoStart = true;
-      ports = lib.mapAttrsToList
-        (_: p: "${addr}:${toString p}:${toString p}")
-        webPorts;
-      environment = commonEnv;
-      volumes = [
-        "${appdata}/radarr:/config"
-        "/data:/data"
+      imports = [
+        (mkServerContainer {
+          name = "radarr";
+          image = "lscr.io/linuxserver/radarr:latest";
+          inherit port;
+          dockerAssertionMessage = "server-radarr needs the docker module enabled on this host.";
+          missingAddressMessage = "server-radarr needs homelab.address set on this host";
+          oci = {
+            environment = {
+              PUID = "1000";
+              PGID = "1000";
+              TZ = "Europe/Stockholm";
+            };
+            volumes = [
+              "/docker/radarr:/config"
+              "/data:/data"
+            ];
+          };
+        })
       ];
     };
-  };
 }

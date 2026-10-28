@@ -1,42 +1,39 @@
+{ ... }:
+let
+  mkServerContainer = import ./_lib/mk-server-container.nix;
+in
 {
-  flake.modules.nixos.server-seerr = { config, lib, pkgs, ... }:
-  let
-    addr =
-      if config.homelab.address == null
-      then throw "server-seerr needs homelab.address set on this host"
-      else config.homelab.address;
+  flake.modules.nixos.server-seerr = { ... }:
+    let
+      port = 5055;
+    in
+    {
+      homelab.services.seerr = {
+        inherit port;
+        authBypassLocations = [
+          "^~ /api/v1/"
+        ];
+      };
 
-    appdata = "/docker";
-
-    webPorts = { seerr = 5055; };
-
-    commonEnv = { PUID = "1000"; PGID = "1000"; TZ = "Europe/Stockholm"; };
-  in
-  {
-    assertions = [{
-      assertion = config.virtualisation.docker.enable;
-      message = "server-radarr needs the docker module enabled on this host.";
-    }];
-    virtualisation.oci-containers.backend = "docker";
-
-homelab.services = lib.mapAttrs (_: port: {
-  inherit port;
-
-  authBypassLocations = [
-    "^~ /api/v1/"
-  ];
-}) webPorts;
-
-    virtualisation.oci-containers.containers.seer = {
-      image = "ghcr.io/seerr-team/seerr:latest";
-      autoStart = true;
-      ports = lib.mapAttrsToList
-        (_: p: "${addr}:${toString p}:${toString p}")
-        webPorts;
-      environment = commonEnv;
-      volumes = [
-        "${appdata}/seerr:/app/config"
+      imports = [
+        (mkServerContainer {
+          name = "seerr";
+          image = "ghcr.io/seerr-team/seerr:latest";
+          inherit port;
+          containerName = "seer";
+          dockerAssertionMessage = "server-radarr needs the docker module enabled on this host.";
+          missingAddressMessage = "server-seerr needs homelab.address set on this host";
+          oci = {
+            environment = {
+              PUID = "1000";
+              PGID = "1000";
+              TZ = "Europe/Stockholm";
+            };
+            volumes = [
+              "/docker/seerr:/app/config"
+            ];
+          };
+        })
       ];
     };
-  };
 }
