@@ -12,7 +12,7 @@
   NAS_UPDATE_USER = "admin";
 
   NAS_UPDATE_URL =
-    "https://ntfy.${config.homelab.domain}/update";
+    "https://ntfy.${config.homelab.domain}/updates";
 
   NAS_UPDATE_TOKEN_FILE =
     config.sops.secrets."diun/ntfy-token".path;
