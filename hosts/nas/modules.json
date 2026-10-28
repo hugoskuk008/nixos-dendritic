@@ -17,6 +17,7 @@
       "public-ingress",
       "security",
       "server-audiobookshelf",
+      "server-autoupdate",
       "server-backend-isolation",
       "server-bazarr",
       "server-diun",
