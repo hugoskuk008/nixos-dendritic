@@ -26,13 +26,13 @@
 
         peers = [
           {
-            publicKey = "+ZRin/Nm9RGoc+sKBy70u3J6GmSqqA6HVXdF9TjTmnE=";
+            publicKey = "naIdD2/b/JzwAWlULwurr6ynd9r+JOylg9m2DmU+Bns=";
 
             allowedIPs = [
               "${oracleAddress}/32"
             ];
 
-            endpoint = "79.76.41.197:51820";
+            endpoint = "82.70.54.97:51820";
 
             # Home initiates through its router/NAT.
             persistentKeepalive = 25;

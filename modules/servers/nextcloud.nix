@@ -33,7 +33,7 @@
       homelab.services.nextcloud = {
   inherit port;
   auth = "authentik";
-
+public.enable = true;
   authBypassLocations = [
     # WebDAV (files, calendars, contacts)
     "~ ^/remote[.]php/(dav|webdav)(/|$)"
@@ -149,11 +149,10 @@
             REDIS_HOST = "nextcloud-redis";
 
             NEXTCLOUD_ADMIN_USER = "admin";
-            NEXTCLOUD_TRUSTED_DOMAINS = domain;
-
-            OVERWRITEHOST = domain;
+            NEXTCLOUD_TRUSTED_DOMAINS =
+             "${domain} nextcloud.hogcloud.bid";
             OVERWRITEPROTOCOL = "https";
-            OVERWRITECLIURL = "https://${domain}";
+#            OVERWRITECLIURL = "https://${domain}";
 
             PHP_MEMORY_LIMIT = "1024M";
             PHP_UPLOAD_LIMIT = "10G";
