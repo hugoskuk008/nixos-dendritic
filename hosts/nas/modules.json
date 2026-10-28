@@ -19,15 +19,18 @@
       "server-audiobookshelf",
       "server-backend-isolation",
       "server-bazarr",
+      "server-diun",
       "server-download-stack",
       "server-jellyfin",
       "server-lazyLibrarian",
       "server-nextcloud",
+      "server-ntfy",
       "server-radarr",
       "server-seerr",
       "server-sonarr",
       "sops",
       "tailscale",
+      "updateContainers",
       "zsh"
     ],
     "disabled": [
