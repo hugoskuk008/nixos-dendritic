@@ -10,8 +10,8 @@
       commonEnvironment = {
         NAS_UPDATE_REPO = cfg.repoDir;
         NAS_UPDATE_USER = "admin";
-        NAS_UPDATE_URL = "https://ntfy.${config.homelab.domain}/update";
-        NAS_UPDATE_TOKEN_FILE = config.sops.secrets."nas-update/ntfy-token".path;
+        NAS_UPDATE_URL = "https://ntfy.${config.homelab.domain}/updates";
+        NAS_UPDATE_TOKEN_FILE = config.sops.secrets."diun/ntfy-token".path;
         NAS_UPDATE_STATE_DIR = "/var/lib/nas-flake-update";
       };
       commonPath = with pkgs; [
@@ -29,7 +29,7 @@
       # The old generic updater must never race with this Git-aware updater.
       system.autoUpgrade.enable = lib.mkForce false;
 
-      sops.secrets."nas-update/ntfy-token" = {
+      sops.secrets."diun/ntfy-token" = {
         mode = "0400";
       };
 
