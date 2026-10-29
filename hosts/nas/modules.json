@@ -29,6 +29,7 @@
       "server-radarr",
       "server-seerr",
       "server-sonarr",
+      "server-xray",
       "sops",
       "tailscale",
       "updateContainers",
