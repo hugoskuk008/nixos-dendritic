@@ -25,7 +25,7 @@ flake.modules.nixos.Laptop = {pkgs, ...}: {
          boot.kernelPackages = pkgs.linuxPackages_latest;
          environment.systemPackages = with pkgs; [
            discord 
-          thunderbird 
+          thunderbird
          ];
 };
 

@@ -19,6 +19,7 @@
       "onePassword",
       "security",
       "sops",
+      "steamVanilla",
       "system",
       "tailscale",
       "tlp",
@@ -50,7 +51,6 @@
       "server-radarr",
       "server-sonarr",
       "steam",
-      "steamVanilla",
       "twingate"
     ]
   },
