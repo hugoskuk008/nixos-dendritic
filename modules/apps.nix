@@ -26,6 +26,8 @@ flake.modules.nixos.Laptop = {pkgs, ...}: {
          environment.systemPackages = with pkgs; [
            discord 
           thunderbird
+          v2rayn
+          localsend
          ];
 };
 
